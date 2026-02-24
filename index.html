@@ -1,0 +1,1955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abdul Mujeeb — Cloud & Network Security Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+
+:root{
+  --bg:    #080808;
+  --bg2:   #0e0e0e;
+  --bg3:   #141414;
+  --white: #e8e4dc;
+  --muted: #525252;
+  --slate: #878787;
+  --text:  #b8b4ac;
+  --gold:  #c4a96e;
+  --gold2: #8a7248;
+  --border:rgba(255,255,255,0.07);
+  --borderh:rgba(196,169,110,0.25);
+}
+
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--bg);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+
+/* ══════════════ NAV ══════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.1rem 2.5rem;
+  background:rgba(8,8,8,0.97);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(16px);
+}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);text-decoration:none;letter-spacing:0.01em;}
+.nav-logo span{color:var(--gold);font-style:italic;}
+
+.hamburger{width:44px;height:44px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:0;z-index:300;}
+.hamburger span{display:block;width:24px;height:1.5px;background:rgba(232,228,220,0.5);transition:all .35s cubic-bezier(.4,0,.2,1);transform-origin:center;}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+
+.nav-drawer{
+  position:fixed;top:0;right:0;width:300px;height:100vh;
+  background:#0c0c0c;border-left:1px solid var(--border);
+  z-index:250;transform:translateX(100%);
+  transition:transform .4s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;padding:5.5rem 2rem 2.5rem;
+}
+.nav-drawer.open{transform:translateX(0);}
+.nav-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:240;opacity:0;pointer-events:none;transition:opacity .35s;}
+.nav-overlay.open{opacity:1;pointer-events:all;}
+.drawer-links{list-style:none;display:flex;flex-direction:column;gap:0;flex:1;}
+.drawer-links li a{
+  display:flex;align-items:center;
+  font-size:.82rem;font-weight:400;
+  color:rgba(232,228,220,.4);
+  text-decoration:none;
+  padding:.9rem 0 .9rem .75rem;
+  border-bottom:1px solid var(--border);
+  border-left:2px solid transparent;
+  letter-spacing:.04em;
+  transition:color .2s,border-left-color .2s,padding-left .2s;
+}
+.drawer-links li a:hover{color:var(--white);border-left-color:var(--white);padding-left:1.25rem;}
+.drawer-cv{margin-top:2rem;}
+.drawer-cv a{display:flex;align-items:center;justify-content:center;gap:.6rem;background:var(--white);color:#080808;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:1rem;transition:opacity .2s;}
+.drawer-cv a:hover{opacity:.88;}
+.drawer-footer{margin-top:1.25rem;font-size:.65rem;color:var(--muted);text-align:center;}
+
+/* ══════════════ HERO ══════════════ */
+#hero{
+  min-height:100vh;display:flex;align-items:center;
+  background:var(--bg);padding:8rem 2.5rem 5rem;
+  position:relative;overflow:hidden;
+}
+.hero-bg-line{position:absolute;top:0;bottom:0;right:38%;width:1px;background:linear-gradient(to bottom,transparent,rgba(196,169,110,.15),transparent);}
+.hero-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr auto;gap:4rem;align-items:center;}
+
+.hero-eyebrow{font-size:.7rem;font-weight:500;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;margin-bottom:1.25rem;opacity:0;animation:fadeUp .8s ease forwards .2s;}
+.hero-name{font-family:'Playfair Display',serif;font-size:clamp(3rem,6vw,5.2rem);font-weight:700;color:var(--white);line-height:1.05;margin-bottom:.75rem;opacity:0;animation:fadeUp .8s ease forwards .4s;}
+.hero-name em{font-style:italic;color:var(--gold);}
+.hero-titles{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.75rem;opacity:0;animation:fadeUp .8s ease forwards .6s;}
+.hero-title-pill{font-size:.68rem;font-weight:500;color:var(--gold);background:rgba(196,169,110,.08);border:1px solid rgba(196,169,110,.2);padding:.3rem .75rem;letter-spacing:.05em;}
+.hero-desc{font-size:.9rem;color:var(--muted);line-height:1.9;max-width:520px;margin-bottom:2.5rem;opacity:0;animation:fadeUp .8s ease forwards .8s;}
+.hero-desc strong{color:var(--text);font-weight:500;}
+.hero-actions{display:flex;gap:1rem;opacity:0;animation:fadeUp .8s ease forwards 1s;}
+.btn-primary{font-size:.76rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;padding:.9rem 2rem;background:var(--white);color:#080808;transition:opacity .2s;}
+.btn-primary:hover{opacity:.88;}
+.btn-outline{font-size:.76rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;padding:.9rem 2rem;border:1px solid rgba(232,228,220,.15);color:rgba(232,228,220,.5);transition:all .2s;}
+.btn-outline:hover{border-color:rgba(232,228,220,.35);color:var(--white);}
+
+.hero-stats{display:flex;flex-direction:column;gap:1rem;opacity:0;animation:fadeIn 1s ease forwards 1.2s;}
+.stat-box{background:rgba(255,255,255,.025);border:1px solid var(--border);border-top:1px solid rgba(196,169,110,.2);padding:1.4rem 1.75rem;text-align:center;min-width:145px;}
+.stat-num{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:700;color:var(--white);line-height:1;display:block;}
+.stat-label{font-size:.6rem;font-weight:500;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-top:.3rem;display:block;}
+
+.scroll-down{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:0;animation:fadeIn 1s ease forwards 1.8s;}
+.scroll-down span{font-size:.55rem;font-weight:500;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;}
+.scroll-arrow{width:1px;height:40px;background:linear-gradient(to bottom,rgba(196,169,110,.3),transparent);animation:ap 2s ease-in-out infinite;}
+@keyframes ap{0%,100%{opacity:.3;transform:scaleY(.7)}50%{opacity:1;transform:scaleY(1)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* ══════════════ SHARED ══════════════ */
+.sec-wrap{max-width:1100px;margin:0 auto;padding:0 2.5rem;}
+.sec-label{display:flex;align-items:center;gap:1rem;margin-bottom:3.5rem;}
+.sec-num{font-size:.63rem;font-weight:600;color:var(--gold);letter-spacing:.18em;text-transform:uppercase;}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.4rem);font-weight:700;color:var(--white);line-height:1.15;}
+
+.sec-rule{flex:1;height:1px;background:var(--border);}
+
+/* ══════════════ ABOUT ══════════════ */
+#about{padding:7rem 0;background:var(--bg2);}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;}
+.about-text p{font-size:.9rem;color:var(--slate);line-height:1.95;margin-bottom:1.15rem;}
+.about-text p strong{color:var(--text);font-weight:500;}
+.about-info{margin-top:2rem;display:flex;flex-direction:column;}
+.info-row{display:flex;align-items:center;gap:1rem;font-size:.8rem;color:var(--muted);padding:.65rem 0;border-bottom:1px solid var(--border);}
+.info-row:first-child{border-top:1px solid var(--border);}
+.info-label{font-weight:600;color:var(--text);min-width:75px;font-size:.74rem;}
+.info-val a{color:var(--gold);text-decoration:none;}
+.info-val a:hover{text-decoration:underline;}
+.profile-card{background:var(--bg3);border:1px solid var(--border);border-top:2px solid var(--gold2);padding:2.25rem;}
+.profile-card-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:1.5rem;}
+.domain-list{display:flex;flex-direction:column;gap:.8rem;}
+.domain-item{display:flex;align-items:flex-start;gap:.75rem;font-size:.82rem;color:var(--slate);line-height:1.4;}
+.domain-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;flex-shrink:0;margin-top:.4em;}
+
+/* Specialisms strip */
+.specialisms{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin-top:1.5rem;border:1px solid var(--border);}
+.spec-item{background:var(--bg3);padding:1.25rem 1rem;text-align:center;}
+.spec-icon{font-size:1.3rem;display:block;margin-bottom:.5rem;opacity:.7;}
+.spec-label{font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1.4;}
+
+/* ══════════════ EXPERIENCE ══════════════ */
+#experience{padding:7rem 0;background:var(--bg);}
+.exp-list{display:flex;flex-direction:column;gap:1.25rem;}
+.exp-card{background:var(--bg2);border:1px solid var(--border);border-left:2px solid transparent;padding:2rem 2.25rem;transition:border-left-color .25s,box-shadow .25s;}
+.exp-card:hover{border-left-color:var(--gold);box-shadow:0 4px 40px rgba(0,0,0,.5);}
+.exp-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.75rem;margin-bottom:.75rem;}
+.exp-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);}
+.exp-company{font-size:.82rem;font-weight:600;color:var(--gold);margin-top:.15rem;}
+.exp-right{display:flex;flex-direction:column;align-items:flex-end;gap:.35rem;}
+.exp-period{font-size:.7rem;color:var(--muted);background:rgba(255,255,255,.03);border:1px solid var(--border);padding:.2rem .6rem;white-space:nowrap;}
+.exp-loc{font-size:.68rem;color:var(--muted);}
+.exp-summary{font-size:.84rem;color:var(--muted);line-height:1.75;margin-bottom:.85rem;}
+.exp-bullets{list-style:none;display:flex;flex-direction:column;gap:.4rem;}
+.exp-bullets li{font-size:.82rem;color:var(--slate);line-height:1.65;padding-left:1rem;position:relative;}
+.exp-bullets li::before{content:'';position:absolute;left:0;top:.6em;width:5px;height:1px;background:var(--gold);}
+.exp-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:1rem;}
+.exp-tag{font-size:.62rem;font-weight:500;color:var(--muted);background:rgba(255,255,255,.03);border:1px solid var(--border);padding:.18rem .5rem;}
+
+/* ══════════════ SKILLS ══════════════ */
+#skills{padding:7rem 0;background:var(--bg2);}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.25rem;}
+.skill-card{background:var(--bg3);border:1px solid var(--border);padding:1.75rem;transition:box-shadow .25s,transform .25s,border-color .25s;}
+.skill-card:hover{box-shadow:0 4px 35px rgba(0,0,0,.5);transform:translateY(-2px);border-color:var(--borderh);}
+.skill-category{font-size:.62rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;}
+.skill-name{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;color:var(--white);margin-bottom:1rem;}
+.skill-tags{display:flex;flex-wrap:wrap;gap:.38rem;}
+.stag{font-size:.68rem;font-weight:400;color:var(--slate);background:rgba(255,255,255,.035);border:1px solid var(--border);padding:.2rem .52rem;}
+
+/* ══════════════ CERTIFICATIONS ══════════════ */
+#certifications{padding:7rem 0;background:var(--bg);}
+.certs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.5rem;}
+.cert-card{background:var(--bg2);border:1px solid var(--border);overflow:hidden;transition:box-shadow .25s,transform .25s,border-color .25s;}
+.cert-card:hover{box-shadow:0 6px 40px rgba(0,0,0,.6);transform:translateY(-3px);border-color:var(--borderh);}
+.cert-img-wrap{width:100%;height:165px;background:var(--bg3);border-bottom:1px solid var(--border);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.cert-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+.cert-img-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;width:100%;height:100%;text-align:center;padding:1rem;}
+.cert-logo{font-size:1.9rem;line-height:1;opacity:.45;}
+.cert-org{font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+.cert-img-wrap.aws {background:#110d02;}
+.cert-img-wrap.ms  {background:#020a14;}
+.cert-img-wrap.ec  {background:#120202;}
+.cert-img-wrap.csa {background:#021208;}
+.cert-img-wrap.comp{background:#08021a;}
+.cert-img-wrap.other{background:var(--bg3);}
+.cert-body{padding:1.25rem;}
+.cert-issuer{font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.35rem;}
+.cert-name{font-family:'Playfair Display',serif;font-size:.88rem;font-weight:700;color:var(--white);line-height:1.35;margin-bottom:.3rem;}
+.cert-id{font-size:.66rem;color:var(--muted);}
+.cert-verified{display:inline-flex;align-items:center;gap:.35rem;font-size:.6rem;font-weight:600;color:#4ade80;background:rgba(74,222,128,.07);border:1px solid rgba(74,222,128,.18);padding:.16rem .5rem;margin-top:.5rem;}
+
+/* ══════════════ EDUCATION ══════════════ */
+#education{padding:7rem 0;background:var(--bg2);}
+.edu-card{background:var(--bg3);border:1px solid var(--border);border-top:2px solid var(--gold2);padding:2.75rem;max-width:800px;}
+.edu-degree{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:.35rem;}
+.edu-uni{font-size:.84rem;font-weight:500;color:var(--gold);margin-bottom:.25rem;}
+.edu-period{font-size:.7rem;color:var(--muted);margin-bottom:1.75rem;}
+.edu-modules{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.75rem;}
+.edu-tag{font-size:.68rem;font-weight:400;color:var(--slate);background:rgba(255,255,255,.035);border:1px solid var(--border);padding:.2rem .58rem;}
+.edu-diss{border-top:1px solid var(--border);padding-top:1.5rem;}
+.edu-diss-label{font-size:.62rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;}
+.edu-diss p{font-size:.83rem;color:var(--slate);line-height:1.8;}
+
+/* ══════════════ BLOG ══════════════ */
+#blog{padding:7rem 0;background:var(--bg);}
+.blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:1.5rem;}
+.blog-card{background:var(--bg2);border:1px solid var(--border);display:flex;flex-direction:column;transition:box-shadow .25s,transform .25s,border-color .25s;text-decoration:none;color:inherit;}
+.blog-card:hover{box-shadow:0 6px 40px rgba(0,0,0,.5);transform:translateY(-3px);border-color:var(--borderh);}
+.blog-card-img{width:100%;height:175px;background:var(--bg3);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border);}
+.blog-card-img-placeholder{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:700;color:rgba(232,228,220,.04);}
+.blog-card-category{position:absolute;bottom:1rem;left:1.25rem;font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(232,228,220,.55);background:rgba(255,255,255,.05);border:1px solid var(--border);padding:.18rem .52rem;}
+.blog-card-body{padding:1.5rem;flex:1;display:flex;flex-direction:column;}
+.blog-card-meta{display:flex;gap:1rem;margin-bottom:.75rem;}
+.blog-card-date,.blog-card-read{font-size:.68rem;color:var(--muted);}
+.blog-card-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);line-height:1.35;margin-bottom:.75rem;}
+.blog-card-excerpt{font-size:.8rem;color:var(--slate);line-height:1.75;flex:1;margin-bottom:1.25rem;}
+.blog-card-link{font-size:.72rem;font-weight:600;color:var(--gold);letter-spacing:.04em;display:flex;align-items:center;gap:.4rem;}
+.blog-card-link::after{content:'→';}
+
+/* ══════════════ RESOURCES ══════════════ */
+#resources{padding:7rem 0;background:var(--bg2);}
+.res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;}
+.res-card{background:var(--bg3);border:1px solid var(--border);padding:1.75rem;transition:box-shadow .25s,transform .25s,border-color .25s;text-decoration:none;color:inherit;display:block;}
+.res-card:hover{box-shadow:0 4px 35px rgba(0,0,0,.4);transform:translateY(-2px);border-color:var(--borderh);}
+.res-icon{font-size:1.35rem;margin-bottom:.75rem;display:block;opacity:.65;}
+.res-type{font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.35rem;}
+.res-name{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:700;color:var(--white);line-height:1.35;margin-bottom:.5rem;}
+.res-desc{font-size:.78rem;color:var(--muted);line-height:1.65;}
+
+/* ══════════════ CONTACT ══════════════ */
+#contact{padding:7rem 0;background:var(--bg);}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;}
+.contact-desc{font-size:.88rem;color:var(--slate);line-height:1.9;margin-bottom:2.25rem;}
+.contact-items{display:flex;flex-direction:column;gap:.75rem;}
+.contact-item{display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;background:var(--bg2);border:1px solid var(--border);text-decoration:none;transition:border-color .2s,box-shadow .2s;}
+.contact-item:hover{border-color:var(--borderh);box-shadow:0 2px 25px rgba(0,0,0,.4);}
+.ci-icon{width:36px;height:36px;background:rgba(196,169,110,.1);border:1px solid rgba(196,169,110,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.82rem;}
+.ci-label{font-size:.62rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;}
+.ci-val{font-size:.82rem;font-weight:500;color:var(--white);display:block;}
+.contact-right{background:var(--bg3);border:1px solid var(--border);border-top:2px solid var(--gold2);padding:2.75rem;}
+.contact-right-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--white);margin-bottom:.9rem;}
+.contact-right p{font-size:.82rem;color:var(--muted);line-height:1.9;margin-bottom:1.75rem;}
+.ks-list{display:flex;flex-direction:column;gap:.6rem;}
+.ks-item{display:flex;align-items:flex-start;gap:.75rem;font-size:.8rem;color:var(--slate);}
+.ks-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;flex-shrink:0;margin-top:.45em;}
+
+/* ══════════════ FOOTER ══════════════ */
+footer{padding:1.75rem 2.5rem;background:var(--bg);border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.footer-name{font-family:'Playfair Display',serif;font-size:.85rem;font-weight:700;color:rgba(232,228,220,.35);}
+.footer-copy{font-size:.65rem;color:var(--muted);}
+
+/* ══════════════ REVEAL ══════════════ */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;} .reveal.visible{opacity:1;transform:translateY(0);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-left{opacity:0;transform:translateX(-20px);transition:opacity .6s ease,transform .6s ease;} .reveal-left.visible{opacity:1;transform:translateX(0);}
+.reveal-left.visible{opacity:1;transform:translateX(0);}
+.reveal-right{opacity:0;transform:translateX(20px);transition:opacity .6s ease,transform .6s ease;} .reveal-right.visible{opacity:1;transform:translateX(0);}
+.reveal-right.visible{opacity:1;transform:translateX(0);}
+.d1{transition-delay:.07s}.d2{transition-delay:.14s}.d3{transition-delay:.21s}
+.d4{transition-delay:.28s}.d5{transition-delay:.35s}.d6{transition-delay:.42s}
+
+/* ══════════════ RESPONSIVE ══════════════ */
+@media(max-width:900px){
+  .sec-wrap{padding:0 1.5rem;}
+  .hero-inner{grid-template-columns:1fr;}
+  .hero-stats{flex-direction:row;flex-wrap:wrap;}
+  #hero{padding:7rem 1.5rem 5rem;}
+  .about-grid,.contact-grid{grid-template-columns:1fr;gap:2.5rem;}
+  .specialisms{grid-template-columns:repeat(2,1fr);}
+}
+
+/* ══════════════ KNOWLEDGE BASE ══════════════ */
+#knowledge{padding:7rem 0;background:var(--bg);}
+.kb-intro{font-size:.88rem;color:var(--muted);line-height:1.8;max-width:680px;margin-bottom:3rem;}
+.kb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1px;background:var(--border);}
+.kb-card{background:var(--bg2);display:flex;flex-direction:column;}
+.kb-card-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.25rem 1.5rem;cursor:pointer;
+  border-left:2px solid transparent;
+  transition:border-left-color .2s,background .2s;
+  user-select:none;
+}
+.kb-card-header:hover{background:rgba(255,255,255,.025);border-left-color:var(--gold);}
+.kb-card-header.open{border-left-color:var(--gold);background:rgba(196,169,110,.04);}
+.kb-card-icon{font-size:1rem;margin-right:.75rem;opacity:.6;}
+.kb-card-title{font-family:'Playfair Display',serif;font-size:.92rem;font-weight:700;color:var(--white);flex:1;}
+.kb-card-count{font-size:.62rem;font-weight:600;color:var(--gold);background:rgba(196,169,110,.1);border:1px solid rgba(196,169,110,.2);padding:.15rem .45rem;margin-right:.75rem;white-space:nowrap;}
+.kb-chevron{font-size:.7rem;color:var(--muted);transition:transform .3s;}
+.kb-card-header.open .kb-chevron{transform:rotate(180deg);}
+.kb-body{display:none;padding:0 1.5rem 1.25rem;border-top:1px solid var(--border);}
+.kb-body.open{display:block;}
+.kb-group{margin-top:1rem;}
+.kb-group-title{font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;}
+.kb-topics{display:flex;flex-wrap:wrap;gap:.35rem;}
+.kb-topic{font-size:.68rem;color:var(--slate);background:rgba(255,255,255,.03);border:1px solid var(--border);padding:.2rem .55rem;transition:border-color .15s,color .15s;}
+.kb-topic:hover{border-color:rgba(196,169,110,.3);color:var(--text);}
+.kb-stats-strip{display:flex;gap:2rem;margin-bottom:3rem;flex-wrap:wrap;}
+.kb-stat{display:flex;flex-direction:column;}
+.kb-stat-num{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--white);line-height:1.2;}
+.kb-stat-label{font-size:.62rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:.2rem;}
+
+/* ══════════════ PROJECTS ══════════════ */
+#projects{padding:7rem 0;background:var(--bg2);}
+.projects-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;}
+.project-card{background:var(--bg3);border:1px solid var(--border);overflow:hidden;transition:box-shadow .25s,transform .25s,border-color .25s;}
+.project-card:hover{box-shadow:0 8px 50px rgba(0,0,0,.6);transform:translateY(-4px);border-color:var(--borderh);}
+.project-header{padding:2rem 2rem 1.25rem;border-bottom:1px solid var(--border);}
+.project-badge{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);background:rgba(196,169,110,.08);border:1px solid rgba(196,169,110,.2);padding:.25rem .65rem;display:inline-block;margin-bottom:.9rem;}
+.project-title{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--white);line-height:1.25;margin-bottom:.6rem;}
+.project-subtitle{font-size:.8rem;color:var(--muted);line-height:1.6;}
+.project-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.9rem;}
+.ptag{font-size:.62rem;font-weight:500;color:var(--slate);background:rgba(255,255,255,.04);border:1px solid var(--border);padding:.18rem .5rem;}
+.project-body{padding:1.75rem 2rem;}
+.project-section-title{font-size:.63rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.65rem;margin-top:1.25rem;}
+.project-section-title:first-child{margin-top:0;}
+.project-text{font-size:.82rem;color:var(--slate);line-height:1.85;margin-bottom:.75rem;}
+.project-text strong{color:var(--text);font-weight:600;}
+.project-steps{list-style:none;display:flex;flex-direction:column;gap:.5rem;margin-bottom:.75rem;}
+.project-steps li{font-size:.8rem;color:var(--slate);line-height:1.7;padding-left:1.1rem;position:relative;}
+.project-steps li::before{content:'';position:absolute;left:0;top:.6em;width:5px;height:1px;background:var(--gold);}
+.project-code{background:#0a0a0a;border:1px solid rgba(196,169,110,.15);border-left:2px solid var(--gold);padding:1rem 1.25rem;margin:.75rem 0;overflow-x:auto;}
+.project-code pre{font-family:'Courier New',monospace;font-size:.72rem;color:#a8c4a2;line-height:1.7;margin:0;white-space:pre-wrap;word-break:break-word;}
+.project-code .code-comment{color:#5a7a5a;}
+.project-code .code-key{color:#c4a96e;}
+.project-code .code-val{color:#87b1d4;}
+.project-outcome{background:rgba(196,169,110,.04);border:1px solid rgba(196,169,110,.12);padding:1rem 1.25rem;margin-top:1rem;}
+.project-outcome-title{font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;}
+.project-outcome-items{display:flex;flex-wrap:wrap;gap:.4rem;}
+.poi{font-size:.72rem;color:#4ade80;background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.15);padding:.2rem .55rem;}
+@media(max-width:900px){.projects-grid{grid-template-columns:1fr;}}
+
+.currently-strip{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem;padding:.9rem 1.25rem;background:rgba(196,169,110,.04);border:1px solid rgba(196,169,110,.15);border-left:2px solid var(--gold);}
+.currently-label{font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-right:.5rem;}
+.currently-item{font-size:.7rem;color:var(--text);background:rgba(255,255,255,.04);border:1px solid var(--border);padding:.22rem .6rem;}
+</style>
+</head>
+<body>
+
+<!-- ════ NAV ════ -->
+<nav>
+  <a href="#hero" class="nav-logo">Abdul Mujeeb</a>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="nav-overlay" id="navOverlay"></div>
+<div class="nav-drawer" id="navDrawer">
+  <ul class="drawer-links">
+    <li><a href="#hero"           class="dl">Home</a></li>
+    <li><a href="#about"          class="dl">About</a></li>
+    <li><a href="#experience"     class="dl">Experience</a></li>
+    <li><a href="#projects"       class="dl">Projects</a></li>
+    <li><a href="#skills"         class="dl">Skills</a></li>
+    <li><a href="#certifications" class="dl">Certifications</a></li>
+    <li><a href="#knowledge"      class="dl">Knowledge Base</a></li>
+    <li><a href="#resources"      class="dl">Resources</a></li>
+    <li><a href="#blog"           class="dl">Blog</a></li>
+    <li><a href="#contact"        class="dl">Contact Me</a></li>
+  </ul>
+  <div class="drawer-cv">
+    <a href="Abdul_Mujeeb_CV.pdf" download="Abdul_Mujeeb_CV.pdf">⬇ Download CV</a>
+  </div>
+  <div class="drawer-footer">Cloud & Network Security · London, UK</div>
+</div>
+
+<!-- ════ HERO ════ -->
+<section id="hero">
+  <div class="hero-bg-line"></div>
+  <div class="hero-inner">
+    <div>
+      <p class="hero-eyebrow">Security Engineer · London, UK</p>
+      <h1 class="hero-name">Abdul<br>Mujeeb</h1>
+      <div class="hero-titles">
+        <span class="hero-title-pill">Cloud Security</span>
+        <span class="hero-title-pill">Network Security</span>
+        <span class="hero-title-pill">AI Security</span>
+        <span class="hero-title-pill">Web App Pentesting</span>
+        <span class="hero-title-pill">DevSecOps</span>
+        <span class="hero-title-pill">Incident Response</span>
+        <span class="hero-title-pill">Disaster Recovery</span>
+        <span class="hero-title-pill">CI/CD Security</span>
+        <span class="hero-title-pill">Windows Server</span>
+        <span class="hero-title-pill">Linux — RHCSA/RHCE</span>
+      </div>
+      <p class="hero-desc">
+        <strong>5+ years</strong> securing multi-cloud environments (AWS, Azure, GCP), enterprise networks, and AI systems.
+        CCNA &amp; CCNP-level network engineering. Windows &amp; Linux systems administration. Web application penetration testing.
+        Incident response. From Cisco and Palo Alto firewall architecture to securing LLM pipelines and AI agents
+        — I cover the full stack.
+      </p>
+      <div class="hero-actions">
+        <a href="#experience" class="btn-primary">View Experience</a>
+        <a href="#contact"    class="btn-outline">Contact Me</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-box"><span class="stat-num">5+</span><span class="stat-label">Years Experience</span></div>
+      <div class="stat-box"><span class="stat-num">15+</span><span class="stat-label">Certifications</span></div>
+      <div class="stat-box"><span class="stat-num" style="font-size:.85rem;padding:.2rem 0;letter-spacing:.04em;">AWS · Azure · GCP</span><span class="stat-label">Cloud Platforms</span></div>
+      <div class="stat-box"><span class="stat-num" style="font-size:1rem;padding:.15rem 0;letter-spacing:.04em;">CCNA / CCNP</span><span class="stat-label">Network Level</span></div>
+    </div>
+  </div>
+  <div class="scroll-down"><span>Scroll</span><div class="scroll-arrow"></div></div>
+</section>
+
+<!-- ════ ABOUT ════ -->
+<section id="about">
+  <div class="sec-wrap">
+    <div class="sec-label reveal">
+      <span class="sec-num">01</span>
+      <h2 class="sec-title">Profile</h2>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="about-grid">
+      <div class="reveal-left">
+        <div class="about-text">
+          <p>I am a <strong>Cloud, Network & AI Security Engineer</strong> with 5+ years of hands-on experience protecting enterprise infrastructure across AWS, Azure, and GCP — and a deep foundation in network engineering built from the ground up: routing protocols, switching, firewalls, and network architecture using Cisco and Palo Alto technologies.</p>
+          <p>My expertise spans the full security spectrum — from architecting Zero Trust networks and securing Kubernetes workloads, to conducting web application penetration tests and building defences against emerging AI threats including prompt injection, LLM data poisoning, and AI agent compromise.</p>
+          <p>I hold CCNA and CCNP-level knowledge in routing and switching, network security, and firewall architecture — complemented by 15+ certifications across cloud, ethical hacking, forensics, and compliance.</p>
+        </div>
+        <div class="about-info">
+          <div class="info-row"><span class="info-label">Location</span><span class="info-val">London, United Kingdom</span></div>
+          <div class="info-row"><span class="info-label">Email</span><span class="info-val"><a href="/cdn-cgi/l/email-protection#90d1f2f4e5fcfdf3e9f2f5e2e3f5f3d0f7fdf1f9fcbef3fffd"><span class="__cf_email__" data-cfemail="59183b3d2c35343a203b3c2b2a3c3a193e34383035773a3634">[email&#160;protected]</span></a></span></div>
+          <div class="info-row"><span class="info-label">Phone</span><span class="info-val"><a href="tel:+447308667966">+44 7308 667966</a></span></div>
+          <div class="info-row"><span class="info-label">LinkedIn</span><span class="info-val"><a href="https://linkedin.com/in/abdul-m-116215171" target="_blank">linkedin.com/in/abdul-m-116215171</a></span></div>
+        </div>
+        <div class="specialisms reveal">
+          <div class="spec-item"><span class="spec-icon">☁️</span><span class="spec-label">Cloud Security</span></div>
+          <div class="spec-item"><span class="spec-icon">🌐</span><span class="spec-label">Network Security</span></div>
+          <div class="spec-item"><span class="spec-icon">🤖</span><span class="spec-label">AI Security</span></div>
+          <div class="spec-item"><span class="spec-icon">🔍</span><span class="spec-label">Penetration Testing</span></div>
+        </div>
+      </div>
+      <div class="reveal-right">
+        <div class="profile-card">
+          <div class="profile-card-title">Areas of Expertise</div>
+          <div class="domain-list">
+            <div class="domain-item"><div class="domain-dot"></div>Multi-Cloud Security Architecture — AWS, Azure, GCP</div>
+            <div class="domain-item"><div class="domain-dot"></div>Enterprise Network Security — Cisco, Palo Alto, Fortinet</div>
+            <div class="domain-item"><div class="domain-dot"></div>Routing Protocols — BGP, OSPF, EIGRP, RIP, MPLS</div>
+            <div class="domain-item"><div class="domain-dot"></div>Firewall Architecture — NGFW, IDS/IPS, DMZ Design</div>
+            <div class="domain-item"><div class="domain-dot"></div>AI & LLM Security — Prompt Injection, Agent Compromise</div>
+            <div class="domain-item"><div class="domain-dot"></div>Web Application Penetration Testing — OWASP Top 10</div>
+            <div class="domain-item"><div class="domain-dot"></div>DevSecOps & CI/CD Pipeline Security</div>
+            <div class="domain-item"><div class="domain-dot"></div>SOC Operations & Incident Response</div>
+            <div class="domain-item"><div class="domain-dot"></div>Zero Trust Architecture & IAM</div>
+            <div class="domain-item"><div class="domain-dot"></div>Windows Server & Active Directory Administration</div>
+            <div class="domain-item"><div class="domain-dot"></div>Incident Response & Disaster Recovery Planning</div>
+            <div class="domain-item"><div class="domain-dot"></div>Compliance — ISO 27001, Cyber Essentials+, GDPR</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ PROJECTS ════ -->
+<section id="projects">
+  <div class="sec-wrap">
+    <div class="sec-label reveal">
+      <span class="sec-num">03</span>
+      <h2 class="sec-title">Projects</h2>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="projects-grid">
+
+      <!-- PROJECT 1: SENTINEL -->
+      <div class="project-card reveal d1">
+        <div class="project-header">
+          <span class="project-badge">🔵 Blue Team · SIEM Engineering</span>
+          <div class="project-title">Microsoft Sentinel — Advanced Threat Detection Lab</div>
+          <div class="project-subtitle">Built a fully operational Microsoft Sentinel environment from scratch, engineering custom detection rules, SOAR playbooks, and a threat intelligence integration pipeline to detect real-world attack patterns mapped to MITRE ATT&CK.</div>
+          <div class="project-tags">
+            <span class="ptag">Microsoft Sentinel</span><span class="ptag">KQL</span><span class="ptag">SOAR</span>
+            <span class="ptag">MITRE ATT&CK</span><span class="ptag">Log Analytics</span><span class="ptag">Azure</span>
+            <span class="ptag">Defender XDR</span><span class="ptag">Threat Intelligence</span>
+          </div>
+        </div>
+        <div class="project-body">
+
+          <div class="project-section-title">Objective</div>
+          <p class="project-text">Design and deploy a production-grade SIEM environment capable of detecting lateral movement, credential theft, command-and-control activity, and cloud-based attacks — with automated response playbooks that reduce mean time to respond (MTTR) from hours to minutes.</p>
+
+          <div class="project-section-title">Architecture</div>
+          <ul class="project-steps">
+            <li>Deployed a Log Analytics Workspace in Azure as the centralised data ingestion layer, connected to Microsoft Sentinel</li>
+            <li>Onboarded data connectors — Microsoft Defender for Endpoint, Microsoft 365 Defender, Azure Activity Logs, Azure AD Sign-In Logs, Syslog (Linux), Windows Security Events, and a custom CEF connector for Palo Alto firewall logs</li>
+            <li>Integrated MITRE ATT&CK framework tagging across all analytics rules for consistent TTP mapping</li>
+            <li>Connected Microsoft Threat Intelligence (MDTI) and deployed TAXII feeds for IOC enrichment</li>
+          </ul>
+
+          <div class="project-section-title">Detection Rule — Brute Force & Credential Stuffing (KQL)</div>
+          <div class="project-code"><pre><span class="code-comment">// Detect multiple failed sign-ins followed by a success — Credential Stuffing</span>
+<span class="code-key">let</span> failureThreshold = <span class="code-val">10</span>;
+<span class="code-key">let</span> timeWindow = <span class="code-val">30m</span>;
+SigninLogs
+<span class="code-key">| where</span> ResultType != <span class="code-val">"0"</span>
+<span class="code-key">| summarize</span> FailureCount = count(), 
+            FailedIPs = make_set(IPAddress),
+            Apps = make_set(AppDisplayName)
+    <span class="code-key">by</span> UserPrincipalName, bin(TimeGenerated, timeWindow)
+<span class="code-key">| where</span> FailureCount >= failureThreshold
+<span class="code-key">| join kind=inner</span> (
+    SigninLogs
+    <span class="code-key">| where</span> ResultType == <span class="code-val">"0"</span>
+    <span class="code-key">| project</span> UserPrincipalName, SuccessTime = TimeGenerated, SuccessIP = IPAddress
+) <span class="code-key">on</span> UserPrincipalName
+<span class="code-key">| where</span> SuccessTime between (TimeGenerated .. TimeGenerated + timeWindow)
+<span class="code-key">| project</span> UserPrincipalName, FailureCount, FailedIPs, SuccessIP, SuccessTime</pre></div>
+
+          <div class="project-section-title">Detection Rule — Lateral Movement via PsExec (KQL)</div>
+          <div class="project-code"><pre><span class="code-comment">// Detect PsExec lateral movement — remote service creation</span>
+SecurityEvent
+<span class="code-key">| where</span> EventID == <span class="code-val">7045</span>  <span class="code-comment">// New service installed</span>
+<span class="code-key">| where</span> ServiceName matches regex <span class="code-val">@"PSEXESVC|[a-zA-Z]{6,8}"</span>
+<span class="code-key">| where</span> ServiceFileName has_any (<span class="code-val">"%systemroot%\PSEXESVC.exe"</span>,
+                                   <span class="code-val">"\\127.0.0.1\"</span>, <span class="code-val">"admin$"</span>)
+<span class="code-key">| join kind=leftouter</span> (
+    SecurityEvent
+    <span class="code-key">| where</span> EventID == <span class="code-val">4624</span> <span class="code-key">and</span> LogonType == <span class="code-val">3</span>
+    <span class="code-key">| project</span> Computer, LogonTime = TimeGenerated, 
+              SourceIP = IpAddress, Account
+) <span class="code-key">on</span> Computer
+<span class="code-key">| where</span> LogonTime between (TimeGenerated - <span class="code-val">5m</span> .. TimeGenerated + <span class="code-val">2m</span>)
+<span class="code-key">| project</span> TimeGenerated, Computer, ServiceName, SourceIP, Account
+<span class="code-key">| extend</span> MitreAttack = <span class="code-val">"T1570 - Lateral Tool Transfer"</span></pre></div>
+
+          <div class="project-section-title">SOAR Playbook — Automated Account Lockout Response</div>
+          <ul class="project-steps">
+            <li>Sentinel Analytics Rule triggers high-severity incident on credential stuffing detection</li>
+            <li>Logic App playbook fires automatically — queries Entra ID for account risk level via Microsoft Graph API</li>
+            <li>If risk level is High or Medium: automatically disables the account, revokes all active sessions, and forces MFA re-registration</li>
+            <li>Posts incident details to a dedicated Microsoft Teams security channel with full context — user, IPs, timestamps, ATT&CK TTP mapping</li>
+            <li>Creates a ServiceNow ticket automatically with evidence bundle attached</li>
+            <li>MTTR reduced from average 47 minutes (manual) to under 3 minutes (automated)</li>
+          </ul>
+
+          <div class="project-section-title">Additional Detections Built</div>
+          <ul class="project-steps">
+            <li>Impossible Travel — sign-in from two countries within 2 hours</li>
+            <li>Azure privilege escalation — new Owner role assignment outside change window</li>
+            <li>DNS over HTTPS (DoH) tunnelling detection via proxy logs</li>
+            <li>Scheduled task created by non-admin account (T1053.005)</li>
+            <li>High-volume email forwarding rules — potential BEC indicator</li>
+            <li>Malicious OAuth app consent — detecting risky third-party app permissions</li>
+          </ul>
+
+          <div class="project-outcome">
+            <div class="project-outcome-title">Outcomes</div>
+            <div class="project-outcome-items">
+              <span class="poi">12 custom detection rules</span>
+              <span class="poi">4 automated SOAR playbooks</span>
+              <span class="poi">MTTR reduced to &lt;3 min</span>
+              <span class="poi">Full MITRE ATT&CK coverage mapped</span>
+              <span class="poi">6 data connectors integrated</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 2: NETWORK TOPOLOGY -->
+      <div class="project-card reveal d2">
+        <div class="project-header">
+          <span class="project-badge">🌐 Network Engineering · Security Design</span>
+          <div class="project-title">Enterprise Network Topology — Full Stack Design & Implementation</div>
+          <div class="project-subtitle">Designed and implemented a full enterprise network from scratch — covering routing protocols, switching, VPN architecture, firewall deployment, and Zero Trust segmentation across a multi-site topology using Cisco and Palo Alto.</div>
+          <div class="project-tags">
+            <span class="ptag">Cisco IOS</span><span class="ptag">Palo Alto NGFW</span><span class="ptag">BGP</span>
+            <span class="ptag">OSPF</span><span class="ptag">DMVPN</span><span class="ptag">IPSec</span>
+            <span class="ptag">MPLS</span><span class="ptag">Zero Trust</span><span class="ptag">VLANs</span>
+          </div>
+        </div>
+        <div class="project-body">
+
+          <div class="project-section-title">Objective</div>
+          <p class="project-text">Build a fully documented enterprise network topology simulating a company with a <strong>Head Office (London)</strong>, two <strong>Branch Offices (Manchester, Edinburgh)</strong>, and a <strong>DMZ</strong> hosting public-facing services — with full routing, switching, firewall, VPN, and security controls implemented end-to-end.</p>
+
+          <div class="project-section-title">Topology Overview</div>
+          <ul class="project-steps">
+            <li><strong>Head Office (London)</strong> — Core layer with Cisco Catalyst L3 switches, Palo Alto PA-820 NGFW, ISP edge routers running BGP, internal OSPF area 0</li>
+            <li><strong>Branch Offices</strong> — Cisco ISR routers, OSPF area 1 (Manchester) and area 2 (Edinburgh), connected to HO via DMVPN over internet with IPSec encryption</li>
+            <li><strong>DMZ Zone</strong> — Dedicated Palo Alto security zone hosting web servers, email relay, and reverse proxy — strict inter-zone policy, no direct access to internal LAN</li>
+            <li><strong>Data Centre</strong> — Cisco Nexus switches, VRF-Lite for tenant separation, BGP route reflector, MPLS backbone between sites</li>
+            <li><strong>Internet Edge</strong> — Dual ISP with BGP for redundancy, AS path prepending for traffic engineering, full route filtering with prefix lists</li>
+          </ul>
+
+          <div class="project-section-title">Routing Protocol Stack</div>
+          <ul class="project-steps">
+            <li><strong>OSPF</strong> — Internal IGP across all sites. Multi-area design: Area 0 (backbone/core), Area 1 (Manchester stub), Area 2 (Edinburgh NSSA). LSA filtering at ABRs, virtual-link for area continuity. Authentication via MD5</li>
+            <li><strong>BGP</strong> — EBGP to both ISPs for internet redundancy. IBGP full mesh within data centre, route reflectors to eliminate full mesh requirement. BGP communities for traffic engineering. AS path prepending for primary/secondary ISP failover</li>
+            <li><strong>EIGRP</strong> — Legacy branch segments retained EIGRP. Full redistribution between EIGRP and OSPF with route-maps and metric manipulation to control path selection and prevent routing loops</li>
+            <li><strong>MPLS</strong> — MPLS LDP across the data centre core. VRF-Lite providing full routing separation between departments (Finance, HR, Engineering) without separate physical infrastructure</li>
+          </ul>
+
+          <div class="project-section-title">VPN Architecture — DMVPN Phase 3 with IPSec</div>
+          <div class="project-code"><pre><span class="code-comment">! Hub Router — HO London — DMVPN Phase 3 Config</span>
+<span class="code-key">interface</span> Tunnel0
+ <span class="code-val">ip address 10.100.0.1 255.255.255.0</span>
+ <span class="code-val">ip nhrp network-id 100</span>
+ <span class="code-val">ip nhrp map multicast dynamic</span>
+ <span class="code-val">ip nhrp redirect</span>          <span class="code-comment">! Phase 3 — enables spoke-to-spoke shortcut</span>
+ <span class="code-val">tunnel source GigabitEthernet0/0</span>
+ <span class="code-val">tunnel mode gre multipoint</span>
+ <span class="code-val">tunnel key 100</span>
+ <span class="code-val">tunnel protection ipsec profile DMVPN_PROFILE</span>
+<span class="code-comment">!</span>
+<span class="code-key">crypto ikev2 proposal</span> IKEv2_PROP
+ <span class="code-val">encryption aes-cbc-256</span>
+ <span class="code-val">integrity sha512</span>
+ <span class="code-val">group 20</span>               <span class="code-comment">! ECDH 384-bit</span>
+<span class="code-key">crypto ipsec transform-set</span> TSET esp-aes 256 esp-sha512-hmac
+ <span class="code-val">mode transport</span>          <span class="code-comment">! Transport mode over GRE tunnel</span></pre></div>
+
+          <div class="project-section-title">Firewall — Palo Alto NGFW Policy Design</div>
+          <ul class="project-steps">
+            <li><strong>Security Zones</strong> — Trust (LAN), Untrust (Internet), DMZ, Branch-VPN, Management — strict inter-zone policy, deny-all default</li>
+            <li><strong>App-ID Rules</strong> — Application-based policies replacing port-based rules. Only explicitly permitted applications allowed. Unknown traffic blocked and logged</li>
+            <li><strong>URL Filtering</strong> — Custom URL categories for finance and HR. Malware / phishing / C2 categories blocked across all zones</li>
+            <li><strong>IPS Profile</strong> — Critical and high severity signatures set to block. Medium severity set to alert. Custom signatures for internal asset CVEs</li>
+            <li><strong>SSL Decryption</strong> — Outbound SSL inspection for all trust-to-untrust traffic excluding banking/healthcare categories. Certificate pinned sites excluded</li>
+            <li><strong>NAT Policy</strong> — Dynamic PAT for LAN outbound. Static NAT for DMZ web server. Policy NAT for branch-to-branch traffic over DMVPN</li>
+          </ul>
+
+          <div class="project-section-title">Switching & Layer 2 Security</div>
+          <ul class="project-steps">
+            <li>VLAN segmentation — Finance (VLAN 10), HR (VLAN 20), Engineering (VLAN 30), Guest WiFi (VLAN 40), Management (VLAN 99)</li>
+            <li>Inter-VLAN routing via L3 Cisco Catalyst switches with SVIs — routed up to Palo Alto for security policy enforcement</li>
+            <li>Spanning Tree — Rapid PVST+ with PortFast on access ports, BPDU Guard enabled, Root Guard on uplinks</li>
+            <li>Port Security — maximum 2 MACs per access port, violation shutdown, sticky MAC learning on fixed workstations</li>
+            <li>DHCP Snooping and DAI enabled on all access VLANs — ARP inspection trusts only DHCP snooping binding table</li>
+            <li>Dot1x authentication on all wired access ports via Cisco ISE as RADIUS server</li>
+          </ul>
+
+          <div class="project-section-title">High Availability</div>
+          <ul class="project-steps">
+            <li>Palo Alto Active/Passive HA pair at HO with sub-second failover — config sync and session sync enabled</li>
+            <li>HSRP on all L3 SVIs — primary switch preempts with higher priority, tracking interface state</li>
+            <li>Dual ISP BGP failover — primary ISP preference via local-pref 200, secondary via local-pref 100. Automatic failover on BGP session drop with BFD detection</li>
+            <li>DMVPN spoke routers configured with dual hub for redundancy — primary hub HO London, secondary hub Manchester DR site</li>
+          </ul>
+
+          <div class="project-outcome">
+            <div class="project-outcome-title">Outcomes</div>
+            <div class="project-outcome-items">
+              <span class="poi">3-site full mesh topology</span>
+              <span class="poi">BGP + OSPF + EIGRP + MPLS</span>
+              <span class="poi">DMVPN Phase 3 + IPSec AES-256</span>
+              <span class="poi">Palo Alto NGFW — 5 security zones</span>
+              <span class="poi">Zero Trust segmentation</span>
+              <span class="poi">Sub-second HA failover</span>
+              <span class="poi">Full Layer 2 security stack</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════ EXPERIENCE ════ -->
+<section id="experience">
+  <div class="sec-wrap">
+    <div class="sec-label reveal">
+      <span class="sec-num">04</span>
+      <h2 class="sec-title">Work Experience</h2>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="exp-list">
+
+      <!-- KURT GEIGER -->
+      <div class="exp-card reveal d1">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">Cloud Security Engineer</div>
+            <div class="exp-company">Kurt Geiger</div>
+          </div>
+          <div class="exp-right">
+            <span class="exp-period">May 2023 – Present</span>
+            <span class="exp-loc">📍 London</span>
+          </div>
+        </div>
+        <p class="exp-summary">Leading cloud security and DevSecOps across AWS, Azure, and GCP. Responsible for securing the entire technology estate — from cloud workloads and container environments to CI/CD pipelines, network perimeters, and endpoint fleets. Reduced incident response time by 40% and pre-deployment critical vulnerabilities by 95%.</p>
+        <ul class="exp-bullets">
+          <li>Designed and implemented multi-cloud Zero Trust security architecture embedding DevSecOps controls into CI/CD pipelines using Snyk, GitHub Advanced Security, and Trivy.</li>
+          <li>Built custom detections, correlation rules, and automated SOAR playbooks in Microsoft Sentinel and CrowdStrike Falcon — reducing MTTR by 40%.</li>
+          <li>Secured cloud networks via VPC design, Security Groups, Network ACLs, Private Endpoints, and micro-segmentation aligned to Zero Trust principles.</li>
+          <li>Implemented container and Kubernetes security for EKS, AKS, and GKE using Aqua Security, Twistlock, Falco, and Kubernetes RBAC with CIS Benchmarks.</li>
+          <li>Automated remediation workflows from AWS GuardDuty, Security Hub, and Azure Defender using SOAR playbooks — reducing manual analyst workload significantly.</li>
+          <li>Conducted threat modelling sessions using MITRE ATT&CK, STRIDE, and PASTA methodologies for new product launches and infrastructure changes.</li>
+          <li>Delivered endpoint compliance and data protection via Microsoft Intune, Defender XDR, and Purview — aligned to ISO 27001 and SOC 2.</li>
+          <li>Advised engineering teams on AI/LLM integration security risks including prompt injection, model data leakage, and supply chain threats.</li>
+        </ul>
+        <div class="exp-tags"><span class="exp-tag">AWS</span><span class="exp-tag">Azure</span><span class="exp-tag">GCP</span><span class="exp-tag">Zero Trust</span><span class="exp-tag">Sentinel</span><span class="exp-tag">CrowdStrike</span><span class="exp-tag">Kubernetes</span><span class="exp-tag">DevSecOps</span><span class="exp-tag">MITRE ATT&CK</span><span class="exp-tag">AI Security</span></div>
+      </div>
+
+      <!-- BLUECUBE -->
+      <div class="exp-card reveal d2">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">SOC Analyst L2</div>
+            <div class="exp-company">Bluecube Technology Solutions</div>
+          </div>
+          <div class="exp-right">
+            <span class="exp-period">Jul 2022 – May 2023</span>
+            <span class="exp-loc">📍 Milton Keynes</span>
+          </div>
+        </div>
+        <p class="exp-summary">Supporting 24/7 SOC operations and client security engineering across 150+ UK clients spanning retail, healthcare, legal, and finance sectors.</p>
+        <ul class="exp-bullets">
+          <li>Led L2 alert triage and investigation across SentinelOne, Azure Sentinel, Microsoft 365 Defender, and Sophos — handling complex multi-stage attack chains.</li>
+          <li>Designed and deployed Azure cloud security architectures for SME and enterprise clients including Defender for Cloud, Conditional Access, and Privileged Identity Management.</li>
+          <li>Managed vulnerability lifecycle using Tenable Nessus — from scanning and prioritisation to patching coordination and risk acceptance documentation.</li>
+          <li>Executed phishing simulation campaigns using KnowBe4, reducing average client susceptibility rates by over 60%.</li>
+          <li>Investigated and responded to BEC, ransomware precursor activity, and insider threat incidents using Recorded Future threat intelligence.</li>
+          <li>Hardened client network perimeters including firewall rule reviews, VPN configurations, and DNS security using Cisco and Fortinet platforms.</li>
+        </ul>
+        <div class="exp-tags"><span class="exp-tag">SOC</span><span class="exp-tag">SentinelOne</span><span class="exp-tag">Azure Sentinel</span><span class="exp-tag">Nessus</span><span class="exp-tag">KnowBe4</span><span class="exp-tag">Firewall Hardening</span><span class="exp-tag">Threat Hunting</span></div>
+      </div>
+
+      <!-- VALENT -->
+      <div class="exp-card reveal d3">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">Information Security Specialist</div>
+            <div class="exp-company">Valent Projects</div>
+          </div>
+          <div class="exp-right">
+            <span class="exp-period">Feb 2022 – Jul 2022</span>
+            <span class="exp-loc">📍 London</span>
+          </div>
+        </div>
+        <p class="exp-summary">Providing strategic and operational security support to a consultancy serving journalists, activists, and NGOs — environments with elevated threat profiles requiring practical, risk-proportionate controls.</p>
+        <ul class="exp-bullets">
+          <li>Led the organisation through Cyber Essentials certification and prepared technical evidence for Cyber Essentials Plus assessment.</li>
+          <li>Reviewed and redrafted security policies covering acceptable use, data handling, BYOD, and third-party access.</li>
+          <li>Designed and implemented endpoint protection using Jamf for macOS fleet management, full-disk encryption, and MDM policy enforcement.</li>
+          <li>Developed business continuity and disaster recovery plans tested through tabletop exercises.</li>
+          <li>Delivered tailored security guidance to high-risk individuals including journalists and human rights activists working in hostile environments.</li>
+        </ul>
+        <div class="exp-tags"><span class="exp-tag">Cyber Essentials+</span><span class="exp-tag">Jamf</span><span class="exp-tag">Policy</span><span class="exp-tag">BCP/DR</span><span class="exp-tag">Risk Assessment</span></div>
+      </div>
+
+      <!-- CYBER ARMED -->
+      <div class="exp-card reveal d4">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">Cyber Security Consultant</div>
+            <div class="exp-company">Cyber Armed Security</div>
+          </div>
+          <div class="exp-right">
+            <span class="exp-period">Apr 2021 – Feb 2022</span>
+            <span class="exp-loc">📍 London</span>
+          </div>
+        </div>
+        <p class="exp-summary">Conducting vulnerability assessments and web application penetration tests for clients across financial services, healthcare, and e-commerce.</p>
+        <ul class="exp-bullets">
+          <li>Performed web application penetration testing against OWASP Top 10 — identifying SQLi, XSS, IDOR, broken authentication, and SSRF vulnerabilities.</li>
+          <li>Conducted internal and external network penetration tests including Active Directory attack paths, lateral movement, and privilege escalation scenarios.</li>
+          <li>Used Burp Suite Pro, Nmap, Nikto, Metasploit, and manual testing techniques to simulate real-world adversary behaviour.</li>
+          <li>Delivered executive-level and technical remediation reports with CVSS-scored findings, reproduction steps, and fix recommendations.</li>
+          <li>Performed vulnerability scanning using Nessus and Qualys — correlating findings to CVE databases and business risk context.</li>
+        </ul>
+        <div class="exp-tags"><span class="exp-tag">Web App Pentesting</span><span class="exp-tag">OWASP Top 10</span><span class="exp-tag">Burp Suite</span><span class="exp-tag">Metasploit</span><span class="exp-tag">Network Pentesting</span><span class="exp-tag">AD Attacks</span></div>
+      </div>
+
+      <!-- ACCENTURE -->
+      <div class="exp-card reveal d5">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">Security Analyst</div>
+            <div class="exp-company">Accenture</div>
+          </div>
+          <div class="exp-right">
+            <span class="exp-period">Oct 2018 – Dec 2019</span>
+            <span class="exp-loc">📍 India</span>
+          </div>
+        </div>
+        <p class="exp-summary">Enterprise security monitoring and incident response for large-scale client environments. The foundation — where I learned how systems truly break, how attackers operate, and how networks actually behave under pressure.</p>
+        <ul class="exp-bullets">
+          <li>Monitored enterprise security events using QRadar SIEM, IDS/IPS systems, and File Integrity Monitoring across multi-tier environments.</li>
+          <li>Conducted network forensics with Wireshark — analysing packet captures to detect exfiltration, C2 communications, and lateral movement.</li>
+          <li>Applied MITRE ATT&CK framework to map attacker TTPs and improve detection coverage.</li>
+          <li>Managed and maintained client network infrastructure including firewalls, VPNs, load balancers, and SIEM rule tuning.</li>
+          <li>Utilised deep TCP/IP, LAN/WAN, DNS, SMTP, and HTTP/S knowledge to correlate anomalous network behaviour with security incidents.</li>
+        </ul>
+        <div class="exp-tags"><span class="exp-tag">QRadar SIEM</span><span class="exp-tag">Wireshark</span><span class="exp-tag">Network Forensics</span><span class="exp-tag">MITRE ATT&CK</span><span class="exp-tag">TCP/IP</span><span class="exp-tag">IDS/IPS</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════ SKILLS ════ -->
+<section id="skills">
+  <div class="sec-wrap">
+    <div class="sec-label reveal">
+      <span class="sec-num">05</span>
+      <h2 class="sec-title">Technical Skills</h2>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="skills-grid">
+
+      <div class="skill-card reveal d1">
+        <div class="skill-category">Cloud Security</div>
+        <div class="skill-name">Multi-Cloud Platforms</div>
+        <div class="skill-tags">
+          <span class="stag">Azure Sentinel</span><span class="stag">Defender for Cloud</span>
+          <span class="stag">AWS GuardDuty</span><span class="stag">Security Hub</span>
+          <span class="stag">Macie</span><span class="stag">Control Tower</span>
+          <span class="stag">GCP Security Command Center</span><span class="stag">EntraID</span><span class="stag">IAM</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal d2">
+        <div class="skill-category">Network Security</div>
+        <div class="skill-name">Routing, Switching & Firewalls</div>
+        <div class="skill-tags">
+          <span class="stag">Cisco IOS</span><span class="stag">Palo Alto NGFW</span>
+          <span class="stag">Fortinet FortiGate</span><span class="stag">BGP</span>
+          <span class="stag">OSPF</span><span class="stag">EIGRP</span><span class="stag">MPLS</span>
+          <span class="stag">VLANs / STP</span><span class="stag">IPSec VPN</span>
+          <span class="stag">SD-WAN</span><span class="stag">DMZ Design</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal d3">
+        <div class="skill-category">AI & LLM Security</div>
+        <div class="skill-name">Emerging AI Threats</div>
+        <div class="skill-tags">
+          <span class="stag">Prompt Injection Defence</span><span class="stag">LLM Data Poisoning</span>
+          <span class="stag">AI Agent Security</span><span class="stag">RAG Security</span>
+          <span class="stag">Model Supply Chain Risk</span><span class="stag">OWASP LLM Top 10</span>
+          <span class="stag">MLOps Security</span><span class="stag">AI Red Teaming</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal d4">
+        <div class="skill-category">Web Application Security</div>
+        <div class="skill-name">Penetration Testing</div>
+        <div class="skill-tags">
+          <span class="stag">Burp Suite Pro</span><span class="stag">OWASP Top 10</span>
+          <span class="stag">SQLi / XSS / IDOR</span><span class="stag">SSRF / XXE</span>
+          <span class="stag">Broken Auth</span><span class="stag">API Security Testing</span>
+          <span class="stag">Metasploit</span><span class="stag">Nmap</span><span class="stag">Nikto</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal d5">
+        <div class="skill-category">DevSecOps & CI/CD</div>
+        <div class="skill-name">Pipeline Security</div>
+        <div class="skill-tags">
+          <span class="stag">Snyk</span><span class="stag">GitHub Advanced Security</span>
+          <span class="stag">Trivy</span><span class="stag">Azure DevOps</span>
+          <span class="stag">Jenkins</span><span class="stag">Terraform</span>
+          <span class="stag">CloudFormation</span><span class="stag">Policy-as-Code</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal d6">
+        <div class="skill-category">Container & Kubernetes</div>
+        <div class="skill-name">Container Security</div>
+        <div class="skill-tags">
+          <span class="stag">Aqua Security</span><span class="stag">Prisma Cloud</span>
+          <span class="stag">Twistlock</span><span class="stag">Falco</span>
+          <span class="stag">EKS · AKS · GKE</span>
+          <span class="stag">RBAC</span><span class="stag">CIS Benchmarks</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal d1">
+        <div class="skill-category">SIEM, EDR & Detection</div>
+        <div class="skill-name">Security Operations</div>
+        <div class="skill-tags">
+          <span class="stag">CrowdStrike Falcon</span><span class="stag">SentinelOne</span>
+          <span class="stag">Splunk</span><span class="stag">ELK Stack</span>
+          <span class="stag">QRadar</span><span class="stag">Suricata</span>
+          <span class="stag">Wireshark</span><span class="stag">SOAR Playbooks</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal d2">
+        <div class="skill-category">Identity & Endpoint</div>
+        <div class="skill-name">IAM & Endpoint Security</div>
+        <div class="skill-tags">
+          <span class="stag">Active Directory</span><span class="stag">Azure AD / EntraID</span>
+          <span class="stag">Conditional Access</span><span class="stag">PIM</span>
+          <span class="stag">Intune</span><span class="stag">Defender XDR</span>
+          <span class="stag">Jamf</span><span class="stag">CyberArk PAM</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal d3">
+        <div class="skill-category">Automation & Programming</div>
+        <div class="skill-name">Code & Scripting</div>
+        <div class="skill-tags">
+          <span class="stag">Python</span><span class="stag">PowerShell</span>
+          <span class="stag">Bash</span><span class="stag">Ansible</span>
+          <span class="stag">Terraform</span><span class="stag">KQL</span>
+          <span class="stag">ARM Templates</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal d3">
+        <div class="skill-category">Windows & Active Directory</div>
+        <div class="skill-name">Windows Systems</div>
+        <div class="skill-tags">
+          <span class="stag">Windows Server 2016/2019/2022</span><span class="stag">Active Directory</span>
+          <span class="stag">Group Policy (GPO)</span><span class="stag">DNS & DHCP</span>
+          <span class="stag">PowerShell</span><span class="stag">WSUS</span>
+          <span class="stag">Event Log Analysis</span><span class="stag">RDP Hardening</span>
+          <span class="stag">Windows Defender</span><span class="stag">BitLocker</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal d4">
+        <div class="skill-category">Incident Response & Recovery</div>
+        <div class="skill-name">IR & Disaster Recovery</div>
+        <div class="skill-tags">
+          <span class="stag">Incident Response Lifecycle</span><span class="stag">Digital Forensics</span>
+          <span class="stag">Malware Analysis</span><span class="stag">Memory Forensics</span>
+          <span class="stag">Log Analysis</span><span class="stag">Chain of Custody</span>
+          <span class="stag">BCP / DR Planning</span><span class="stag">Tabletop Exercises</span>
+          <span class="stag">AlienVault USM</span><span class="stag">VirusTotal</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal d4">
+        <div class="skill-category">Compliance & Governance</div>
+        <div class="skill-name">Frameworks & Standards</div>
+        <div class="skill-tags">
+          <span class="stag">ISO 27001</span><span class="stag">NIST CSF</span>
+          <span class="stag">Cyber Essentials+</span><span class="stag">GDPR</span>
+          <span class="stag">CIS Benchmarks</span><span class="stag">MITRE ATT&CK</span>
+          <span class="stag">OWASP LLM Top 10</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════ CERTIFICATIONS ════ -->
+<section id="certifications">
+  <div class="sec-wrap">
+    <div class="sec-label reveal">
+      <span class="sec-num">06</span>
+      <h2 class="sec-title">Certifications</h2>
+      <div class="sec-rule"></div>
+    </div>
+    <!--
+      TO ADD YOUR REAL CERT IMAGE:
+      Find the card below and replace the placeholder div with:
+      <img src="your-cert-image.jpg" alt="Cert Name">
+    -->
+    <div class="certs-grid">
+
+      <div class="cert-card reveal d1">
+        <div class="cert-img-wrap aws"><div class="cert-img-placeholder"><span class="cert-logo">☁️</span><span class="cert-org">Amazon Web Services</span></div></div>
+        <div class="cert-body"><div class="cert-issuer">AWS</div><div class="cert-name">AWS Certified Security – Specialty</div><span class="cert-verified">✓ Verified</span></div>
+      </div>
+
+      <div class="cert-card reveal d2">
+        <div class="cert-img-wrap ms"><div class="cert-img-placeholder"><span class="cert-logo">🪟</span><span class="cert-org">Microsoft</span></div></div>
+        <div class="cert-body"><div class="cert-issuer">Microsoft</div><div class="cert-name">Azure Security Engineer Associate</div><div class="cert-id">ID: I688-6147</div><span class="cert-verified">✓ Verified</span></div>
+      </div>
+
+      <div class="cert-card reveal d3">
+        <div class="cert-img-wrap csa"><div class="cert-img-placeholder"><span class="cert-logo">🔐</span><span class="cert-org">CSA</span></div></div>
+        <div class="cert-body"><div class="cert-issuer">Cloud Security Alliance</div><div class="cert-name">Certificate of Cloud Security Knowledge (CCSK) v5</div><span class="cert-verified">✓ Verified</span></div>
+      </div>
+
+      <div class="cert-card reveal d4">
+        <div class="cert-img-wrap csa"><div class="cert-img-placeholder"><span class="cert-logo">🛡️</span><span class="cert-org">CSA</span></div></div>
+        <div class="cert-body"><div class="cert-issuer">Cloud Security Alliance</div><div class="cert-name">Certificate of Competence in Zero Trust (CCZT)</div><span class="cert-verified">✓ Verified</span></div>
+      </div>
+
+      <div class="cert-card reveal d5">
+        <div class="cert-img-wrap other"><div class="cert-img-placeholder"><span class="cert-logo">🔵</span><span class="cert-org">Security Blue Team</span></div></div>
+        <div class="cert-body"><div class="cert-issuer">Security Blue Team</div><div class="cert-name">BTL1 – Blue Team Level 1</div><div class="cert-id">ID: 462896193</div><span class="cert-verified">✓ Verified</span></div>
+      </div>
+
+      <div class="cert-card reveal d1">
+        <div class="cert-img-wrap ec"><div class="cert-img-placeholder"><span class="cert-logo">🔍</span><span class="cert-org">EC-Council</span></div></div>
+        <div class="cert-body"><div class="cert-issuer">EC-Council</div><div class="cert-name">Computer Hacking Forensic Investigator (CHFI)</div><div class="cert-id">ID: ECC164793520</div><span class="cert-verified">✓ Verified</span></div>
+      </div>
+
+      <div class="cert-card reveal d2">
+        <div class="cert-img-wrap ms"><div class="cert-img-placeholder"><span class="cert-logo">🪟</span><span class="cert-org">Microsoft</span></div></div>
+        <div class="cert-body"><div class="cert-issuer">Microsoft</div><div class="cert-name">Security Operations Analyst Associate</div><div class="cert-id">ID: I381-8167</div><span class="cert-verified">✓ Verified</span></div>
+      </div>
+
+      <div class="cert-card reveal d3">
+        <div class="cert-img-wrap other"><div class="cert-img-placeholder"><span class="cert-logo">🏛️</span><span class="cert-org">MITRE</span></div></div>
+        <div class="cert-body"><div class="cert-issuer">MITRE ATT&CK</div><div class="cert-name">Foundations of Operationalizing MITRE ATT&CK</div><div class="cert-id">Issued Mar 2023</div><span class="cert-verified">✓ Verified</span></div>
+      </div>
+
+      <div class="cert-card reveal d4">
+        <div class="cert-img-wrap ec"><div class="cert-img-placeholder"><span class="cert-logo">🎯</span><span class="cert-org">EC-Council</span></div></div>
+        <div class="cert-body"><div class="cert-issuer">EC-Council</div><div class="cert-name">Certified Ethical Hacker (CEH)</div><div class="cert-id">ID: ECC5309187246</div><span class="cert-verified">✓ Verified</span></div>
+      </div>
+
+      <div class="cert-card reveal d5">
+        <div class="cert-img-wrap ms"><div class="cert-img-placeholder"><span class="cert-logo">🪟</span><span class="cert-org">Microsoft</span></div></div>
+        <div class="cert-body"><div class="cert-issuer">Microsoft</div><div class="cert-name">Information Protection Administrator Associate</div><div class="cert-id">ID: I451-2289</div><span class="cert-verified">✓ Verified</span></div>
+      </div>
+
+      <div class="cert-card reveal d1">
+        <div class="cert-img-wrap aws"><div class="cert-img-placeholder"><span class="cert-logo">☁️</span><span class="cert-org">Amazon Web Services</span></div></div>
+        <div class="cert-body"><div class="cert-issuer">AWS</div><div class="cert-name">AWS Certified Cloud Practitioner</div><span class="cert-verified">✓ Verified</span></div>
+      </div>
+
+      <div class="cert-card reveal d2">
+        <div class="cert-img-wrap ms"><div class="cert-img-placeholder"><span class="cert-logo">🪟</span><span class="cert-org">Microsoft</span></div></div>
+        <div class="cert-body"><div class="cert-issuer">Microsoft</div><div class="cert-name">Microsoft Azure Fundamentals (AZ-900)</div><div class="cert-id">ID: I686-0425</div><span class="cert-verified">✓ Verified</span></div>
+      </div>
+
+      <div class="cert-card reveal d3">
+        <div class="cert-img-wrap aws"><div class="cert-img-placeholder"><span class="cert-logo">☁️</span><span class="cert-org">Amazon Web Services</span></div></div>
+        <div class="cert-body"><div class="cert-issuer">AWS</div><div class="cert-name">AWS Solutions Architect</div><span class="cert-verified">✓ Verified</span></div>
+      </div>
+
+      <div class="cert-card reveal d4">
+        <div class="cert-img-wrap comp"><div class="cert-img-placeholder"><span class="cert-logo">🔒</span><span class="cert-org">CompTIA</span></div></div>
+        <div class="cert-body"><div class="cert-issuer">CompTIA</div><div class="cert-name">CompTIA Security+</div><div class="cert-id">COMP001022048618</div><span class="cert-verified">✓ Verified</span></div>
+      </div>
+
+      <div class="cert-card reveal d5">
+        <div class="cert-img-wrap other"><div class="cert-img-placeholder"><span class="cert-logo">💥</span><span class="cert-org">AttackIQ</span></div></div>
+        <div class="cert-body"><div class="cert-issuer">AttackIQ</div><div class="cert-name">Foundations of Breach & Attack Simulation</div><div class="cert-id">Issued Mar 2023</div><span class="cert-verified">✓ Verified</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════ EDUCATION ════ -->
+<section id="education">
+  <div class="sec-wrap">
+    <div class="sec-label reveal">
+      <span class="sec-num">07</span>
+      <h2 class="sec-title">Education</h2>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-degree">MSc Information Security & Digital Forensics</div>
+      <div class="edu-uni">University of East London</div>
+      <div class="edu-period">January 2020 – February 2022 · London, United Kingdom</div>
+      <div class="edu-modules">
+        <span class="edu-tag">IT Law</span><span class="edu-tag">Digital Forensics</span>
+        <span class="edu-tag">Computer Security</span><span class="edu-tag">Information Security</span>
+        <span class="edu-tag">Network Forensics</span><span class="edu-tag">Kali Linux</span>
+        <span class="edu-tag">Burp Suite</span><span class="edu-tag">Wireshark</span>
+        <span class="edu-tag">Metasploit</span><span class="edu-tag">ISO Standards</span>
+        <span class="edu-tag">NIST Frameworks</span><span class="edu-tag">Malware Analysis</span>
+      </div>
+      <div class="edu-diss">
+        <div class="edu-diss-label">Dissertation</div>
+        <p>Demonstrated the five phases of incident response — Preparation, Identification, Containment, Eradication, and Recovery — using AlienVault USM, VirusTotal, and Threat Miner. Produced a comprehensive end-to-end forensic analysis of a simulated multi-stage security incident, mapping findings to MITRE ATT&CK TTPs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ KNOWLEDGE BASE ════ -->
+<section id="knowledge">
+  <div class="sec-wrap">
+    <div class="sec-label reveal">
+      <span class="sec-num">08</span>
+      <h2 class="sec-title">Knowledge Base</h2>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="kb-stats-strip reveal">
+      <div class="kb-stat"><span class="kb-stat-num">25</span><span class="kb-stat-label">Knowledge Domains</span></div>
+      <div class="kb-stat"><span class="kb-stat-num">650+</span><span class="kb-stat-label">Topics Studied</span></div>
+      <div class="kb-stat"><span class="kb-stat-num">CCNA · CCNP</span><span class="kb-stat-label">Networking</span></div>
+      <div class="kb-stat"><span class="kb-stat-num">AWS · Azure · GCP</span><span class="kb-stat-label">Cloud</span></div>
+      <div class="kb-stat"><span class="kb-stat-num">Linux · Win · Mac</span><span class="kb-stat-label">OS Platforms</span></div>
+      <div class="kb-stat"><span class="kb-stat-num">IR · Web App</span><span class="kb-stat-label">Specialisms</span></div>
+    </div>
+    <div class="currently-strip reveal">
+      <span class="currently-label">Currently Studying</span>
+      <span class="currently-item">AI Red Teaming</span>
+      <span class="currently-item">AI Blue Teaming</span>
+      <span class="currently-item">Kubernetes Security</span>
+      <span class="currently-item">Quantum Computing Security</span>
+      <span class="currently-item">Post-Quantum Cryptography</span>
+    </div>
+    <p class="kb-intro reveal">A comprehensive record of every technology domain, protocol, tool, and concept I have studied in depth — from ground-up network engineering with Cisco and Palo Alto, to Linux systems administration, VPN architectures, and firewall platforms.</p>
+    <div class="kb-grid">
+
+      <div class="kb-card reveal d1">
+        <div class="kb-card-header" onclick="toggleKb(this)">
+          <span class="kb-card-icon">📶</span>
+          <span class="kb-card-title">1. Network Fundamentals — CCNA</span>
+          <span class="kb-card-count">40+ topics</span>
+          <span class="kb-chevron">▼</span>
+        </div>
+        <div class="kb-body">
+          <div class="kb-group">
+            <div class="kb-group-title">Core Concepts</div>
+            <div class="kb-topics"><span class="kb-topic">Communications & Types</span><span class="kb-topic">Binary Language & Convergence</span><span class="kb-topic">IP Address Classes</span><span class="kb-topic">Subnetting — FLSM & VLSM</span><span class="kb-topic">OSI Model (7 Layers)</span><span class="kb-topic">TCP/IP Model</span><span class="kb-topic">Router Physical Structure</span><span class="kb-topic">IOS Boot Process & Modes</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Static & Basic Routing</div>
+            <div class="kb-topics"><span class="kb-topic">Administrative Distance</span><span class="kb-topic">Load Balancing</span><span class="kb-topic">Floating Static Route</span><span class="kb-topic">Static Routing Configuration</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">RIP</div>
+            <div class="kb-topics"><span class="kb-topic">RIPv1 vs RIPv2</span><span class="kb-topic">Route Summarization</span><span class="kb-topic">Passive Interface</span><span class="kb-topic">Unicast Routing</span><span class="kb-topic">Injecting Default Route</span><span class="kb-topic">Authentication</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">EIGRP</div>
+            <div class="kb-topics"><span class="kb-topic">EIGRP Introduction & DUAL Algorithm</span><span class="kb-topic">Route Summarization</span><span class="kb-topic">Passive Interface</span><span class="kb-topic">Unicast Routing</span><span class="kb-topic">Injecting Default Route</span><span class="kb-topic">Authentication</span><span class="kb-topic">Redistribution with RIP</span><span class="kb-topic">Redistribution across Different AS</span><span class="kb-topic">Route Filtration</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Additional Services</div>
+            <div class="kb-topics"><span class="kb-topic">FHRP — HSRP / VRRP / GLBP</span><span class="kb-topic">IOS DHCP & Relay-Agent — DORA Process</span><span class="kb-topic">NTP</span><span class="kb-topic">DNS</span><span class="kb-topic">Basic Router & Switch Security</span><span class="kb-topic">TFTP Server</span><span class="kb-topic">IP SLA Monitor</span><span class="kb-topic">Time-based ACL</span><span class="kb-topic">Cabling</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kb-card reveal d2">
+        <div class="kb-card-header" onclick="toggleKb(this)">
+          <span class="kb-card-icon">🌐</span>
+          <span class="kb-card-title">2. OSPF, BGP & MPLS — CCNP</span>
+          <span class="kb-card-count">45+ topics</span>
+          <span class="kb-chevron">▼</span>
+        </div>
+        <div class="kb-body">
+          <div class="kb-group">
+            <div class="kb-group-title">OSPF — In Depth</div>
+            <div class="kb-topics"><span class="kb-topic">Network Types — PTP / BMA / NBMA</span><span class="kb-topic">Router Types — DR / BDR / DROther / ABR / ASBR / IASBR</span><span class="kb-topic">LSA Type 1 — Router LSA</span><span class="kb-topic">LSA Type 2 — Network LSA</span><span class="kb-topic">LSA Type 3 — Summary LSA</span><span class="kb-topic">LSA Type 4 — ASBR Summary</span><span class="kb-topic">LSA Type 5 — External LSA</span><span class="kb-topic">LSA Type 7 — NSSA External</span><span class="kb-topic">Area Types — Stub / Totally Stub / NSSA / NSSA Stub / NSSA Totally Stub</span><span class="kb-topic">Redistribution</span><span class="kb-topic">Virtual-Link</span><span class="kb-topic">LSA3 Summarization</span><span class="kb-topic">Authentication</span><span class="kb-topic">Injecting Default Route</span><span class="kb-topic">Multi-Area Communication</span><span class="kb-topic">Detailed OSPF Operation & SPF Algorithm</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">BGP — In Depth</div>
+            <div class="kb-topics"><span class="kb-topic">EBGP / IBGP</span><span class="kb-topic">IBGP Issues & Solutions</span><span class="kb-topic">BGP Attributes — Weight / Local Pref / AS Path / MED / Origin</span><span class="kb-topic">BGP Parameters</span><span class="kb-topic">Distribute-list & Prefix-list</span><span class="kb-topic">BGP Authentication</span><span class="kb-topic">Direct & Non-Direct Connected Neighbors</span><span class="kb-topic">BGP Peer-Group</span><span class="kb-topic">Route Reflector</span><span class="kb-topic">Route Summarization</span><span class="kb-topic">Next-Hop-Self</span><span class="kb-topic">Injecting Default Route</span><span class="kb-topic">BGP Design Patterns</span><span class="kb-topic">Detailed BGP Operation</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">MPLS</div>
+            <div class="kb-topics"><span class="kb-topic">MPLS Foundation & Labels</span><span class="kb-topic">VRF — Virtual Router & Forwarder</span><span class="kb-topic">VPNv4</span><span class="kb-topic">MPLS Label Distribution</span><span class="kb-topic">MPLS Traffic Engineering</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kb-card reveal d3">
+        <div class="kb-card-header" onclick="toggleKb(this)">
+          <span class="kb-card-icon">🔀</span>
+          <span class="kb-card-title">3. Switching & VLANs — CCNA/CCNP</span>
+          <span class="kb-card-count">25+ topics</span>
+          <span class="kb-chevron">▼</span>
+        </div>
+        <div class="kb-body">
+          <div class="kb-group">
+            <div class="kb-group-title">Switching Fundamentals</div>
+            <div class="kb-topics"><span class="kb-topic">History of Switching</span><span class="kb-topic">Ethernet Frame Structure</span><span class="kb-topic">VLAN</span><span class="kb-topic">Access / Trunk Port</span><span class="kb-topic">VTP</span><span class="kb-topic">Private VLAN</span><span class="kb-topic">VLAN ACLs</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Inter-VLAN Routing</div>
+            <div class="kb-topics"><span class="kb-topic">Router with Physical Interface</span><span class="kb-topic">Router on a Stick</span><span class="kb-topic">L3 Switch</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Spanning Tree & Redundancy</div>
+            <div class="kb-topics"><span class="kb-topic">Spanning-Tree Protocol (STP)</span><span class="kb-topic">PortFast</span><span class="kb-topic">UplinkFast</span><span class="kb-topic">BackboneFast</span><span class="kb-topic">BPDU Guard / Filter</span><span class="kb-topic">Rapid PVST+</span><span class="kb-topic">MST</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Layer 2 Security</div>
+            <div class="kb-topics"><span class="kb-topic">Port Security</span><span class="kb-topic">Dot1x Authentication</span><span class="kb-topic">DHCP Snooping & DAI</span><span class="kb-topic">EtherChannel (LACP/PAgP)</span><span class="kb-topic">SPAN / RSPAN</span><span class="kb-topic">Storm Control</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kb-card reveal d4">
+        <div class="kb-card-header" onclick="toggleKb(this)">
+          <span class="kb-card-icon">📡</span>
+          <span class="kb-card-title">4. IPv6</span>
+          <span class="kb-card-count">12 topics</span>
+          <span class="kb-chevron">▼</span>
+        </div>
+        <div class="kb-body">
+          <div class="kb-group">
+            <div class="kb-group-title">IPv6 Core</div>
+            <div class="kb-topics"><span class="kb-topic">IPv6 Structure & Format</span><span class="kb-topic">Static & Dynamic Routing</span><span class="kb-topic">Access-list</span><span class="kb-topic">IPv6 Packet Types</span><span class="kb-topic">EUI-64</span><span class="kb-topic">Global Unique Address</span><span class="kb-topic">Local Unique Address</span><span class="kb-topic">Multicast</span><span class="kb-topic">Loopback</span><span class="kb-topic">Link Local</span><span class="kb-topic">OSPFv3</span><span class="kb-topic">BGP for IPv6</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kb-card reveal d5">
+        <div class="kb-card-header" onclick="toggleKb(this)">
+          <span class="kb-card-icon">🛡️</span>
+          <span class="kb-card-title">5. Cisco PIX / ASA</span>
+          <span class="kb-card-count">25+ topics</span>
+          <span class="kb-chevron">▼</span>
+        </div>
+        <div class="kb-body">
+          <div class="kb-group">
+            <div class="kb-group-title">Core Configuration</div>
+            <div class="kb-topics"><span class="kb-topic">Installation of ASA</span><span class="kb-topic">Interface Configuration</span><span class="kb-topic">Traffic Flow — Thru & To Firewall</span><span class="kb-topic">Static & Default Routes</span><span class="kb-topic">ASA as DHCP / Relay-Agent</span><span class="kb-topic">NTP with Authentication</span><span class="kb-topic">Management Protocols</span><span class="kb-topic">Redundant Interface</span><span class="kb-topic">Port-Channel</span><span class="kb-topic">Route Tracking via SLA</span><span class="kb-topic">File Backup & Recovery</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Dynamic Routing on ASA</div>
+            <div class="kb-topics"><span class="kb-topic">RIP with Auth & Redistribution</span><span class="kb-topic">EIGRP with Auth & Redistribution</span><span class="kb-topic">OSPF with Auth & Redistribution</span><span class="kb-topic">BGP with Auth & Redistribution</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">NAT</div>
+            <div class="kb-topics"><span class="kb-topic">Dynamic NAT & Dynamic PAT</span><span class="kb-topic">Static NAT & Static PAT</span><span class="kb-topic">Backup NAT with PAT</span><span class="kb-topic">Identity NAT</span><span class="kb-topic">Policy NAT</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">High Availability</div>
+            <div class="kb-topics"><span class="kb-topic">FHRP — HSRP / VRRP / GLBP</span><span class="kb-topic">Active/Standby Failover</span><span class="kb-topic">Active/Active Failover</span><span class="kb-topic">Multi-Context / Security-Context</span><span class="kb-topic">Physical / Sub-interface / Shared Interface</span><span class="kb-topic">Failover with Multi-Context</span><span class="kb-topic">Zone-Based Firewall (ZBF)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kb-card reveal d6">
+        <div class="kb-card-header" onclick="toggleKb(this)">
+          <span class="kb-card-icon">🔥</span>
+          <span class="kb-card-title">6. Cisco FirePower — FTD / FMC</span>
+          <span class="kb-card-count">18 topics</span>
+          <span class="kb-chevron">▼</span>
+        </div>
+        <div class="kb-body">
+          <div class="kb-group">
+            <div class="kb-group-title">Setup & Config</div>
+            <div class="kb-topics"><span class="kb-topic">Installation of FTD / FMC</span><span class="kb-topic">CLI & GUI Initialization</span><span class="kb-topic">FTD Registration on FMC</span><span class="kb-topic">Interface Configuration</span><span class="kb-topic">Static & Dynamic Routing Protocols</span><span class="kb-topic">Inter-Zone Communication</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">NAT, VPN & HA</div>
+            <div class="kb-topics"><span class="kb-topic">Auto-NAT</span><span class="kb-topic">Manual-NAT</span><span class="kb-topic">High Availability</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Next-Gen Features</div>
+            <div class="kb-topics"><span class="kb-topic">Advanced ACP</span><span class="kb-topic">VPN Configuration</span><span class="kb-topic">Geo-Location Block</span><span class="kb-topic">URL Filtering</span><span class="kb-topic">Application Visibility Control (AVC)</span><span class="kb-topic">IPS — Intrusion Prevention</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kb-card reveal d1">
+        <div class="kb-card-header" onclick="toggleKb(this)">
+          <span class="kb-card-icon">🦁</span>
+          <span class="kb-card-title">7. Palo Alto Firewall — NGFW</span>
+          <span class="kb-card-count">28 topics</span>
+          <span class="kb-chevron">▼</span>
+        </div>
+        <div class="kb-body">
+          <div class="kb-group">
+            <div class="kb-group-title">Setup & Routing</div>
+            <div class="kb-topics"><span class="kb-topic">Installation & GUI Initialisation</span><span class="kb-topic">Interface Config — IPv4/IPv6</span><span class="kb-topic">Inter & Intra-Zone Communication</span><span class="kb-topic">RIP with Auth & Redistribution</span><span class="kb-topic">OSPF — Multi-Area / Area Types / Virtual-Link / Auth</span><span class="kb-topic">BGP — EBGP/IBGP / Route Reflector / Next-Hop-Self / Summarization</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">NAT & VPN</div>
+            <div class="kb-topics"><span class="kb-topic">DNAT / SNAT</span><span class="kb-topic">DPAT / SPAT</span><span class="kb-topic">U-Turn NAT</span><span class="kb-topic">High Availability</span><span class="kb-topic">Site-To-Site VPN (IPv4/IPv6)</span><span class="kb-topic">Multi-Vendor VPN</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Next-Gen Firewall Features</div>
+            <div class="kb-topics"><span class="kb-topic">APP-ID</span><span class="kb-topic">URL Filtering</span><span class="kb-topic">Content-ID</span><span class="kb-topic">User-ID</span><span class="kb-topic">WildFire</span><span class="kb-topic">SSL Decryption</span><span class="kb-topic">GlobalProtect</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kb-card reveal d2">
+        <div class="kb-card-header" onclick="toggleKb(this)">
+          <span class="kb-card-icon">🔒</span>
+          <span class="kb-card-title">8. VPN Architectures</span>
+          <span class="kb-card-count">30+ topics</span>
+          <span class="kb-chevron">▼</span>
+        </div>
+        <div class="kb-body">
+          <div class="kb-group">
+            <div class="kb-group-title">GRE & DMVPN</div>
+            <div class="kb-topics"><span class="kb-topic">Point-to-Point GRE</span><span class="kb-topic">mGRE — Manual</span><span class="kb-topic">DMVPN Phase I</span><span class="kb-topic">DMVPN Phase II</span><span class="kb-topic">DMVPN Phase III</span><span class="kb-topic">Single & Dual Hub DMVPN</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">IPSec</div>
+            <div class="kb-topics"><span class="kb-topic">Router to Router</span><span class="kb-topic">Router to ASA / ASA to ASA</span><span class="kb-topic">Router through ASA — LAN to LAN with NAT-T</span><span class="kb-topic">LAN to LAN without NAT-T</span><span class="kb-topic">IPv4 & IPv6 IPSec</span><span class="kb-topic">IPv6 over IPv4</span><span class="kb-topic">IKEv1 / IKEv2</span><span class="kb-topic">IPSec over PTPGRE — Tunnel & Transport Mode</span><span class="kb-topic">IPSec over PTPGRE — SVTI</span><span class="kb-topic">IPSec over DMVPN</span><span class="kb-topic">GET VPN</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">PKI & SSL VPN</div>
+            <div class="kb-topics"><span class="kb-topic">RSA In Detail</span><span class="kb-topic">CA Server — Root & Intermediate CA</span><span class="kb-topic">Root Certificate / ID Certificate</span><span class="kb-topic">Certificate Chain</span><span class="kb-topic">TLS Handshake / Change Cipher / Alert / App Data Records</span><span class="kb-topic">SSL VPN — Remote Access</span><span class="kb-topic">AnyConnect VPN</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kb-card reveal d3">
+        <div class="kb-card-header" onclick="toggleKb(this)">
+          <span class="kb-card-icon">🐧</span>
+          <span class="kb-card-title">9. Linux — RHCSA / RHCE</span>
+          <span class="kb-card-count">60+ topics</span>
+          <span class="kb-chevron">▼</span>
+        </div>
+        <div class="kb-body">
+          <div class="kb-group">
+            <div class="kb-group-title">Core Linux & Filesystem</div>
+            <div class="kb-topics"><span class="kb-topic">Basic Commands & Navigation</span><span class="kb-topic">Vi/Vim & Nano Editors</span><span class="kb-topic">Runlevels & Systemd vs SysVinit</span><span class="kb-topic">Ownership & Permissions — chmod/chown</span><span class="kb-topic">File System Hierarchy (FSH)</span><span class="kb-topic">Symlinks & Hardlinks</span><span class="kb-topic">Fdisk — Disk Management</span><span class="kb-topic">FIND / LOCATE / GREP</span><span class="kb-topic">Backup using cp / mv / rsync</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Advanced Permissions & Users</div>
+            <div class="kb-topics"><span class="kb-topic">ACLs — setfacl / getfacl</span><span class="kb-topic">Advanced Permissions — SUID / SGID / Sticky Bit</span><span class="kb-topic">Sudoers File & Configuration</span><span class="kb-topic">Umask & PATH Management</span><span class="kb-topic">User & Group Management — UID / GID</span><span class="kb-topic">Types — System / Regular / Root</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">System Administration</div>
+            <div class="kb-topics"><span class="kb-topic">Process & Daemon Management (ps / top / kill)</span><span class="kb-topic">Cron Jobs & Scheduling</span><span class="kb-topic">Archive & Compression — tar / gzip / bzip2</span><span class="kb-topic">Shell Scripting — Bash</span><span class="kb-topic">LVM — PV / VG / LV</span><span class="kb-topic">Boot Process — BIOS / UEFI / GRUB / Kernel Init</span><span class="kb-topic">SELinux — Enforcing / Permissive / MLS Policies</span><span class="kb-topic">Troubleshooting — Kernel Panic / fsck / Rescue Mode</span><span class="kb-topic">RPM & YUM / DNF Package Management</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Networking & Services</div>
+            <div class="kb-topics"><span class="kb-topic">Network Interface Config — ifconfig / ip</span><span class="kb-topic">SSH — Key Management & Hardening</span><span class="kb-topic">NTP Configuration</span><span class="kb-topic">Ports & Protocols</span><span class="kb-topic">Ansible — Playbooks / Vault / Roles / Galaxy</span><span class="kb-topic">NFS — Network File Sharing</span><span class="kb-topic">FTP / SFTP / Samba</span><span class="kb-topic">DHCP Server</span><span class="kb-topic">Firewall / iptables</span><span class="kb-topic">DNS</span><span class="kb-topic">Apache / Nginx</span><span class="kb-topic">MySQL & MongoDB</span><span class="kb-topic">Postfix Mail</span><span class="kb-topic">RAID</span><span class="kb-topic">Nagios / Zabbix Monitoring</span><span class="kb-topic">Clustering & HA</span><span class="kb-topic">Ethernet Bonding</span><span class="kb-topic">HAProxy Load Balancer</span><span class="kb-topic">OpenVPN</span><span class="kb-topic">Tomcat</span><span class="kb-topic">SAN / NAS</span><span class="kb-topic">OS Hardening</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kb-card reveal d4">
+        <div class="kb-card-header" onclick="toggleKb(this)">
+          <span class="kb-card-icon">🖥️</span>
+          <span class="kb-card-title">10. Windows, macOS & Endpoint</span>
+          <span class="kb-card-count">25+ topics</span>
+          <span class="kb-chevron">▼</span>
+        </div>
+        <div class="kb-body">
+          <div class="kb-group">
+            <div class="kb-group-title">Windows Server & AD</div>
+            <div class="kb-topics"><span class="kb-topic">Windows Server 2016 / 2019 / 2022</span><span class="kb-topic">Active Directory — Installation & Config</span><span class="kb-topic">Group Policy (GPO) Management</span><span class="kb-topic">DNS & DHCP on Windows</span><span class="kb-topic">WSUS — Patch Management</span><span class="kb-topic">Event Log Analysis</span><span class="kb-topic">RDP Hardening</span><span class="kb-topic">PowerShell for Security</span><span class="kb-topic">Windows Defender & Firewall</span><span class="kb-topic">BitLocker Encryption</span><span class="kb-topic">NTFS Permissions</span><span class="kb-topic">Task Scheduler</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">macOS Administration</div>
+            <div class="kb-topics"><span class="kb-topic">macOS Architecture</span><span class="kb-topic">Finder & Terminal</span><span class="kb-topic">User & Group Management</span><span class="kb-topic">FileVault Full-Disk Encryption</span><span class="kb-topic">Gatekeeper & XProtect</span><span class="kb-topic">System Integrity Protection (SIP)</span><span class="kb-topic">Jamf — MDM & Fleet Management</span><span class="kb-topic">macOS Firewall Configuration</span><span class="kb-topic">Keychain & Certificate Management</span><span class="kb-topic">Spotlight & Activity Monitor</span><span class="kb-topic">Time Machine Backups</span><span class="kb-topic">Homebrew Package Management</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Endpoint Security</div>
+            <div class="kb-topics"><span class="kb-topic">Endpoint Detection & Response (EDR)</span><span class="kb-topic">Microsoft Intune — MDM/MAM</span><span class="kb-topic">Defender XDR</span><span class="kb-topic">CrowdStrike Falcon Agent</span><span class="kb-topic">SentinelOne Agent</span><span class="kb-topic">Baseline Hardening — CIS Benchmarks</span><span class="kb-topic">Patch Management Lifecycle</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kb-card reveal d5">
+        <div class="kb-card-header" onclick="toggleKb(this)">
+          <span class="kb-card-icon">☁️</span>
+          <span class="kb-card-title">11. AWS Security — Specialty + Solutions Architect</span>
+          <span class="kb-card-count">50+ topics</span>
+          <span class="kb-chevron">▼</span>
+        </div>
+        <div class="kb-body">
+          <div class="kb-group">
+            <div class="kb-group-title">Identity & Access</div>
+            <div class="kb-topics"><span class="kb-topic">IAM — Users / Groups / Roles / Policies</span><span class="kb-topic">IAM Policy Types — Identity / Resource / Permission Boundary</span><span class="kb-topic">Service Control Policies (SCPs)</span><span class="kb-topic">AWS Organizations & Control Tower</span><span class="kb-topic">AWS SSO / Identity Center</span><span class="kb-topic">Cognito — User Pools & Identity Pools</span><span class="kb-topic">Cross-Account Access & Role Assumption</span><span class="kb-topic">Attribute-Based Access Control (ABAC)</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Network Security</div>
+            <div class="kb-topics"><span class="kb-topic">VPC — Subnets / Route Tables / IGW / NAT GW</span><span class="kb-topic">Security Groups vs Network ACLs</span><span class="kb-topic">VPC Flow Logs</span><span class="kb-topic">PrivateLink & VPC Endpoints</span><span class="kb-topic">AWS Network Firewall</span><span class="kb-topic">WAF — Web Application Firewall</span><span class="kb-topic">AWS Shield Standard & Advanced</span><span class="kb-topic">Route 53 DNS Security</span><span class="kb-topic">CloudFront Security</span><span class="kb-topic">Transit Gateway Security</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Data Protection & Encryption</div>
+            <div class="kb-topics"><span class="kb-topic">AWS KMS — Key Management Service</span><span class="kb-topic">CloudHSM</span><span class="kb-topic">S3 Bucket Policies & ACLs</span><span class="kb-topic">S3 Encryption — SSE-S3 / SSE-KMS / SSE-C</span><span class="kb-topic">S3 Block Public Access</span><span class="kb-topic">Macie — Data Classification</span><span class="kb-topic">Secrets Manager vs Parameter Store</span><span class="kb-topic">Certificate Manager (ACM)</span><span class="kb-topic">Data Classification in AWS</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Detection & Monitoring</div>
+            <div class="kb-topics"><span class="kb-topic">GuardDuty — Threat Detection</span><span class="kb-topic">Security Hub — Aggregation & Compliance</span><span class="kb-topic">Amazon Inspector — Vulnerability Scanning</span><span class="kb-topic">AWS Config — Compliance Rules</span><span class="kb-topic">CloudTrail — API Logging & Audit</span><span class="kb-topic">CloudWatch — Metrics / Alarms / Logs</span><span class="kb-topic">EventBridge — Security Automation</span><span class="kb-topic">Amazon Detective — Investigation</span><span class="kb-topic">VPC Traffic Mirroring</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Incident Response & Governance</div>
+            <div class="kb-topics"><span class="kb-topic">Incident Response in AWS — Playbooks</span><span class="kb-topic">Forensic Investigation in AWS</span><span class="kb-topic">AWS Audit Manager</span><span class="kb-topic">Trusted Advisor — Security Checks</span><span class="kb-topic">AWS Backup</span><span class="kb-topic">Disaster Recovery Strategies — Pilot Light / Warm Standby / Multi-Site</span><span class="kb-topic">Penetration Testing Policy in AWS</span><span class="kb-topic">Compliance Frameworks — PCI DSS / HIPAA / SOC 2 in AWS</span><span class="kb-topic">Well-Architected Framework — Security Pillar</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Container & Serverless Security</div>
+            <div class="kb-topics"><span class="kb-topic">EKS Security — RBAC / Pod Security / Network Policies</span><span class="kb-topic">ECR — Image Scanning</span><span class="kb-topic">Lambda Security — Execution Roles / VPC</span><span class="kb-topic">ECS Task IAM Roles</span><span class="kb-topic">AWS Fargate Security</span><span class="kb-topic">API Gateway Security — Auth / Throttling / WAF</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kb-card reveal d6">
+        <div class="kb-card-header" onclick="toggleKb(this)">
+          <span class="kb-card-icon">🔷</span>
+          <span class="kb-card-title">12. Azure Security — AZ-500 + AZ-900</span>
+          <span class="kb-card-count">50+ topics</span>
+          <span class="kb-chevron">▼</span>
+        </div>
+        <div class="kb-body">
+          <div class="kb-group">
+            <div class="kb-group-title">Identity & Access — Entra ID</div>
+            <div class="kb-topics"><span class="kb-topic">Azure AD / Entra ID Architecture</span><span class="kb-topic">Users / Groups / Service Principals / Managed Identities</span><span class="kb-topic">Azure RBAC — Roles / Scopes / Assignments</span><span class="kb-topic">Conditional Access Policies</span><span class="kb-topic">Multi-Factor Authentication (MFA)</span><span class="kb-topic">Self-Service Password Reset (SSPR)</span><span class="kb-topic">Privileged Identity Management (PIM)</span><span class="kb-topic">Azure AD Identity Protection</span><span class="kb-topic">Password Protection & Smart Lockout</span><span class="kb-topic">B2B & B2C Collaboration</span><span class="kb-topic">Azure AD Connect — Hybrid Identity</span><span class="kb-topic">Seamless SSO & Pass-Through Auth</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Network Security</div>
+            <div class="kb-topics"><span class="kb-topic">Virtual Network (VNet) — Subnets / Peering</span><span class="kb-topic">Network Security Groups (NSGs)</span><span class="kb-topic">Application Security Groups (ASGs)</span><span class="kb-topic">Azure Firewall — DNAT / SNAT / Network Rules</span><span class="kb-topic">Azure Firewall Premium — IDPS / TLS Inspection</span><span class="kb-topic">DDoS Protection Standard</span><span class="kb-topic">Azure Front Door & WAF</span><span class="kb-topic">Private Endpoints & Private Link</span><span class="kb-topic">Service Endpoints</span><span class="kb-topic">VPN Gateway — Site-to-Site / P2S</span><span class="kb-topic">ExpressRoute Security</span><span class="kb-topic">Bastion Host</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Data & Key Management</div>
+            <div class="kb-topics"><span class="kb-topic">Azure Key Vault — Keys / Secrets / Certificates</span><span class="kb-topic">Azure Disk Encryption — ADE / SSE</span><span class="kb-topic">Storage Account Security — SAS / Access Keys / Private Endpoints</span><span class="kb-topic">Azure Information Protection (AIP)</span><span class="kb-topic">Microsoft Purview — Data Governance</span><span class="kb-topic">SQL Database — TDE / Always Encrypted / Dynamic Data Masking</span><span class="kb-topic">Defender for SQL</span><span class="kb-topic">Storage Firewall & Network Rules</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Threat Protection & Monitoring</div>
+            <div class="kb-topics"><span class="kb-topic">Microsoft Defender for Cloud — Secure Score</span><span class="kb-topic">Defender for Servers / Containers / App Service</span><span class="kb-topic">Microsoft Sentinel — SIEM & SOAR</span><span class="kb-topic">Log Analytics Workspace</span><span class="kb-topic">Azure Monitor — Metrics / Alerts / Dashboards</span><span class="kb-topic">Defender for Endpoint (MDE)</span><span class="kb-topic">Defender XDR</span><span class="kb-topic">Microsoft Defender Vulnerability Management</span><span class="kb-topic">Activity Logs & Diagnostic Settings</span><span class="kb-topic">Workbooks & Hunting Queries in Sentinel</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Governance & Compliance</div>
+            <div class="kb-topics"><span class="kb-topic">Azure Policy — Definitions / Initiatives / Assignments</span><span class="kb-topic">Management Groups & Subscriptions</span><span class="kb-topic">Azure Blueprints</span><span class="kb-topic">Microsoft Defender for Cloud Regulatory Compliance</span><span class="kb-topic">Cost Management Security</span><span class="kb-topic">Azure Security Benchmark</span><span class="kb-topic">ISO 27001 / SOC 2 / PCI DSS in Azure</span><span class="kb-topic">Compliance Manager</span><span class="kb-topic">Security Alerts & Recommendations</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Container & Application Security</div>
+            <div class="kb-topics"><span class="kb-topic">AKS Security — RBAC / Network Policies / Azure Policy for K8s</span><span class="kb-topic">Azure Container Registry (ACR) Security</span><span class="kb-topic">App Service Security — Auth / TLS / Network Restrictions</span><span class="kb-topic">API Management Security</span><span class="kb-topic">Function Apps — Managed Identity / Auth</span><span class="kb-topic">DevOps Security — Azure DevOps / GitHub Actions</span><span class="kb-topic">Defender for Containers</span><span class="kb-topic">Defender for App Service</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kb-card reveal d1">
+        <div class="kb-card-header" onclick="toggleKb(this)">
+          <span class="kb-card-icon">🟢</span>
+          <span class="kb-card-title">13. GCP Security</span>
+          <span class="kb-card-count">20+ topics</span>
+          <span class="kb-chevron">▼</span>
+        </div>
+        <div class="kb-body">
+          <div class="kb-group">
+            <div class="kb-group-title">Identity & Network</div>
+            <div class="kb-topics"><span class="kb-topic">IAM — Roles / Service Accounts / Workload Identity</span><span class="kb-topic">Organization Policies</span><span class="kb-topic">VPC Security — Firewall Rules / Private Google Access</span><span class="kb-topic">VPC Service Controls</span><span class="kb-topic">Cloud Armor — WAF & DDoS</span><span class="kb-topic">Cloud DNS Security</span><span class="kb-topic">Identity-Aware Proxy (IAP)</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Data & Detection</div>
+            <div class="kb-topics"><span class="kb-topic">GCP Security Command Center (SCC)</span><span class="kb-topic">Cloud KMS & Cloud HSM</span><span class="kb-topic">Cloud Audit Logs</span><span class="kb-topic">Cloud Monitoring & Logging</span><span class="kb-topic">Container Analysis & Binary Authorization</span><span class="kb-topic">Assured Workloads</span><span class="kb-topic">Chronicle SIEM</span><span class="kb-topic">BeyondCorp — Zero Trust</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kb-card reveal d2">
+        <div class="kb-card-header" onclick="toggleKb(this)">
+          <span class="kb-card-icon">🎯</span>
+          <span class="kb-card-title">14. Certified Ethical Hacker — CEH</span>
+          <span class="kb-card-count">40+ topics</span>
+          <span class="kb-chevron">▼</span>
+        </div>
+        <div class="kb-body">
+          <div class="kb-group">
+            <div class="kb-group-title">Reconnaissance</div>
+            <div class="kb-topics"><span class="kb-topic">Footprinting & Reconnaissance</span><span class="kb-topic">Passive Reconnaissance — OSINT</span><span class="kb-topic">Active Reconnaissance</span><span class="kb-topic">Google Dorking</span><span class="kb-topic">WHOIS / DNS Enumeration</span><span class="kb-topic">Shodan & Maltego</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Scanning & Enumeration</div>
+            <div class="kb-topics"><span class="kb-topic">Network Scanning — Nmap</span><span class="kb-topic">Vulnerability Scanning — Nessus / Qualys</span><span class="kb-topic">Port Scanning Techniques — SYN / FIN / XMAS</span><span class="kb-topic">OS Fingerprinting</span><span class="kb-topic">Enumeration — SNMP / LDAP / SMB / NFS</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">System & Network Attacks</div>
+            <div class="kb-topics"><span class="kb-topic">System Hacking — Password Cracking / Privilege Escalation</span><span class="kb-topic">Malware Threats — Trojans / Viruses / Ransomware / Rootkits</span><span class="kb-topic">Sniffing — Wireshark / Ettercap / ARP Poisoning</span><span class="kb-topic">Social Engineering — Phishing / Vishing / Pretexting</span><span class="kb-topic">DoS / DDoS Attacks & Mitigation</span><span class="kb-topic">Session Hijacking — TCP / Cookie</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Web & Application Attacks</div>
+            <div class="kb-topics"><span class="kb-topic">Web Server Attacks — IIS / Apache</span><span class="kb-topic">Web Application Hacking — OWASP Top 10</span><span class="kb-topic">SQL Injection — Blind / Error / Union</span><span class="kb-topic">XSS — Reflected / Stored / DOM</span><span class="kb-topic">CSRF / SSRF / XXE / IDOR</span><span class="kb-topic">Broken Authentication & Session Mgmt</span><span class="kb-topic">API Security Testing</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Advanced Topics</div>
+            <div class="kb-topics"><span class="kb-topic">Evading IDS / Firewalls / Honeypots</span><span class="kb-topic">Hacking Wireless Networks — WPA2 / WPA3</span><span class="kb-topic">Mobile Platform Security — Android / iOS</span><span class="kb-topic">IoT Security</span><span class="kb-topic">Cloud Security Attacks</span><span class="kb-topic">Cryptography — Symmetric / Asymmetric / Hashing</span><span class="kb-topic">Steganography</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kb-card reveal d3">
+        <div class="kb-card-header" onclick="toggleKb(this)">
+          <span class="kb-card-icon">🔬</span>
+          <span class="kb-card-title">15. Computer Hacking Forensic Investigator — CHFI</span>
+          <span class="kb-card-count">35+ topics</span>
+          <span class="kb-chevron">▼</span>
+        </div>
+        <div class="kb-body">
+          <div class="kb-group">
+            <div class="kb-group-title">Investigation Fundamentals</div>
+            <div class="kb-topics"><span class="kb-topic">Digital Forensics Investigation Process</span><span class="kb-topic">First Responder Procedures</span><span class="kb-topic">Chain of Custody</span><span class="kb-topic">Computer Forensics Lab Setup</span><span class="kb-topic">Legal & Ethical Considerations</span><span class="kb-topic">Types of Evidence — Direct / Hearsay / Best</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Data Acquisition & Analysis</div>
+            <div class="kb-topics"><span class="kb-topic">Hard Disk & File System Forensics — FAT / NTFS / EXT</span><span class="kb-topic">Data Acquisition — Live / Dead</span><span class="kb-topic">Anti-Forensics Techniques & Defeating Them</span><span class="kb-topic">OS Forensics — Windows / Linux / macOS Artefacts</span><span class="kb-topic">Registry Analysis</span><span class="kb-topic">Volatile Data Collection — RAM / Running Processes</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Network & Application Forensics</div>
+            <div class="kb-topics"><span class="kb-topic">Network Forensics — Packet Analysis</span><span class="kb-topic">Log Analysis — IDS / Firewall / Web Server</span><span class="kb-topic">Investigating Web Attacks</span><span class="kb-topic">Email Forensics — Header Analysis</span><span class="kb-topic">Database Forensics</span><span class="kb-topic">Browser Forensics — Cache / History / Cookies</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Specialised Forensics</div>
+            <div class="kb-topics"><span class="kb-topic">Cloud Forensics — AWS / Azure Evidence Collection</span><span class="kb-topic">Malware Forensics — Static & Dynamic Analysis</span><span class="kb-topic">Mobile Forensics — Android / iOS</span><span class="kb-topic">IoT Forensics</span><span class="kb-topic">Memory Forensics — Volatility</span><span class="kb-topic">Steganography Detection</span><span class="kb-topic">Incident Reconstruction</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Tools</div>
+            <div class="kb-topics"><span class="kb-topic">Autopsy</span><span class="kb-topic">FTK — Forensic Toolkit</span><span class="kb-topic">Volatility</span><span class="kb-topic">Wireshark</span><span class="kb-topic">AlienVault USM</span><span class="kb-topic">VirusTotal</span><span class="kb-topic">EnCase</span><span class="kb-topic">Cellebrite (Mobile)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kb-card reveal d4">
+        <div class="kb-card-header" onclick="toggleKb(this)">
+          <span class="kb-card-icon">🔵</span>
+          <span class="kb-card-title">16. Blue Team Level 1 — BTL1 & SOC Operations</span>
+          <span class="kb-card-count">30+ topics</span>
+          <span class="kb-chevron">▼</span>
+        </div>
+        <div class="kb-body">
+          <div class="kb-group">
+            <div class="kb-group-title">Phishing Analysis</div>
+            <div class="kb-topics"><span class="kb-topic">Email Header Analysis</span><span class="kb-topic">URL & Attachment Analysis</span><span class="kb-topic">Sandboxing Suspicious Files</span><span class="kb-topic">Identifying Phishing Indicators</span><span class="kb-topic">Reporting & Remediation</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Threat Intelligence</div>
+            <div class="kb-topics"><span class="kb-topic">Threat Intelligence Lifecycle</span><span class="kb-topic">IOCs — Indicators of Compromise</span><span class="kb-topic">MITRE ATT&CK Framework Mapping</span><span class="kb-topic">Threat Feeds & Platforms — VirusTotal / MISP / OpenCTI</span><span class="kb-topic">Diamond Model & Kill Chain</span><span class="kb-topic">Recorded Future</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">SIEM Operations</div>
+            <div class="kb-topics"><span class="kb-topic">Log Sources & Ingestion</span><span class="kb-topic">Alert Triage & Investigation</span><span class="kb-topic">Writing Detection Rules</span><span class="kb-topic">KQL — Kusto Query Language</span><span class="kb-topic">SPL — Splunk Query Language</span><span class="kb-topic">Dashboard & Reporting</span><span class="kb-topic">Alert Fatigue & Tuning</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Digital Forensics (SOC)</div>
+            <div class="kb-topics"><span class="kb-topic">Artefact Collection</span><span class="kb-topic">Memory & Disk Triage</span><span class="kb-topic">Timeline Analysis</span><span class="kb-topic">Browser & Registry Forensics</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Incident Response</div>
+            <div class="kb-topics"><span class="kb-topic">Incident Response Lifecycle — Preparation / Identification / Containment / Eradication / Recovery / Lessons Learned</span><span class="kb-topic">SOAR Playbook Automation</span><span class="kb-topic">Escalation Procedures</span><span class="kb-topic">Post-Incident Reporting</span><span class="kb-topic">Tabletop Exercises</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kb-card reveal d5">
+        <div class="kb-card-header" onclick="toggleKb(this)">
+          <span class="kb-card-icon">☁️</span>
+          <span class="kb-card-title">17. CCSK & CCZT — Cloud & Zero Trust</span>
+          <span class="kb-card-count">35+ topics</span>
+          <span class="kb-chevron">▼</span>
+        </div>
+        <div class="kb-body">
+          <div class="kb-group">
+            <div class="kb-group-title">CCSK — Cloud Security Knowledge</div>
+            <div class="kb-topics"><span class="kb-topic">Cloud Architecture — IaaS / PaaS / SaaS</span><span class="kb-topic">Cloud Reference Architecture</span><span class="kb-topic">Governance & Risk Management in Cloud</span><span class="kb-topic">Legal & Compliance Issues</span><span class="kb-topic">Audit & Assurance</span><span class="kb-topic">Information Management & Data Security</span><span class="kb-topic">Infrastructure Security</span><span class="kb-topic">Virtualisation & Container Security</span><span class="kb-topic">Incident Response in Cloud</span><span class="kb-topic">Application Security</span><span class="kb-topic">Identity & Access Management</span><span class="kb-topic">Security as a Service (SECaaS)</span><span class="kb-topic">Related Technologies — DevSecOps / SIEM in Cloud</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">CCZT — Zero Trust</div>
+            <div class="kb-topics"><span class="kb-topic">Zero Trust Concepts & Principles</span><span class="kb-topic">Zero Trust Architecture (ZTA)</span><span class="kb-topic">NIST SP 800-207 — Zero Trust Architecture</span><span class="kb-topic">Identity-Centric Security</span><span class="kb-topic">Network-Centric Zero Trust — Micro-Segmentation</span><span class="kb-topic">Data-Centric Zero Trust</span><span class="kb-topic">Workload & Application Security</span><span class="kb-topic">Device Trust</span><span class="kb-topic">Continuous Verification — Never Trust Always Verify</span><span class="kb-topic">Zero Trust Maturity Model</span><span class="kb-topic">Implementing ZTA in Cloud</span><span class="kb-topic">Zero Trust in Hybrid Environments</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kb-card reveal d1">
+        <div class="kb-card-header" onclick="toggleKb(this)">
+          <span class="kb-card-icon">📋</span>
+          <span class="kb-card-title">18. CompTIA Security+ & Compliance</span>
+          <span class="kb-card-count">30+ topics</span>
+          <span class="kb-chevron">▼</span>
+        </div>
+        <div class="kb-body">
+          <div class="kb-group">
+            <div class="kb-group-title">Security+ Domains</div>
+            <div class="kb-topics"><span class="kb-topic">Threats, Attacks & Vulnerabilities</span><span class="kb-topic">Social Engineering & Phishing</span><span class="kb-topic">Malware Types & Indicators</span><span class="kb-topic">Application & Network Attacks</span><span class="kb-topic">Cryptography & PKI</span><span class="kb-topic">Wireless Security Protocols</span><span class="kb-topic">Cloud & Virtualisation Security</span><span class="kb-topic">Authentication & Authorisation</span><span class="kb-topic">Incident Response Procedures</span><span class="kb-topic">Risk Management</span><span class="kb-topic">Governance, Risk & Compliance</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Compliance Frameworks</div>
+            <div class="kb-topics"><span class="kb-topic">ISO 27001 — ISMS</span><span class="kb-topic">NIST Cybersecurity Framework (CSF)</span><span class="kb-topic">Cyber Essentials & Cyber Essentials Plus</span><span class="kb-topic">GDPR — Data Protection</span><span class="kb-topic">CIS Controls & Benchmarks</span><span class="kb-topic">PCI DSS</span><span class="kb-topic">SOC 2</span><span class="kb-topic">HIPAA</span><span class="kb-topic">MITRE ATT&CK Operationalisation</span><span class="kb-topic">OWASP Top 10 & OWASP LLM Top 10</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kb-card reveal d2">
+        <div class="kb-card-header" onclick="toggleKb(this)">
+          <span class="kb-card-icon">🤖</span>
+          <span class="kb-card-title">19. AI & LLM Security</span>
+          <span class="kb-card-count">20+ topics</span>
+          <span class="kb-chevron">▼</span>
+        </div>
+        <div class="kb-body">
+          <div class="kb-group">
+            <div class="kb-group-title">AI Threat Landscape</div>
+            <div class="kb-topics"><span class="kb-topic">OWASP LLM Top 10</span><span class="kb-topic">Prompt Injection — Direct & Indirect</span><span class="kb-topic">LLM Data Poisoning</span><span class="kb-topic">Model Inversion Attacks</span><span class="kb-topic">AI Agent Compromise & Tool Abuse</span><span class="kb-topic">RAG Security — Retrieval Augmented Generation</span><span class="kb-topic">Model Supply Chain Risk</span><span class="kb-topic">Insecure Plugin Design</span><span class="kb-topic">Excessive Agency</span><span class="kb-topic">Training Data Exposure</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">AI Security Controls</div>
+            <div class="kb-topics"><span class="kb-topic">AI Red Teaming</span><span class="kb-topic">MLOps Security Pipeline</span><span class="kb-topic">Model Access Control</span><span class="kb-topic">Output Filtering & Guardrails</span><span class="kb-topic">AI Monitoring & Observability</span><span class="kb-topic">Adversarial Robustness Testing</span><span class="kb-topic">Responsible AI & Model Governance</span><span class="kb-topic">Securing AI APIs</span><span class="kb-topic">LLM in DevSecOps Pipelines</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="kb-card reveal d1">
+        <div class="kb-card-header" onclick="toggleKb(this)">
+          <span class="kb-card-icon">🔴</span>
+          <span class="kb-card-title">20. AI Red Teaming — Currently Studying</span>
+          <span class="kb-card-count">20+ topics</span>
+          <span class="kb-chevron">▼</span>
+        </div>
+        <div class="kb-body">
+          <div class="kb-group">
+            <div class="kb-group-title">Adversarial AI Attacks</div>
+            <div class="kb-topics"><span class="kb-topic">Prompt Injection — Direct & Indirect</span><span class="kb-topic">Jailbreaking Techniques</span><span class="kb-topic">Adversarial Examples & Evasion</span><span class="kb-topic">Model Extraction & Inversion</span><span class="kb-topic">Membership Inference Attacks</span><span class="kb-topic">Data Poisoning & Backdoor Attacks</span><span class="kb-topic">Gradient-Based Attacks</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">LLM-Specific Red Teaming</div>
+            <div class="kb-topics"><span class="kb-topic">Red Teaming LLMs — OWASP LLM Top 10</span><span class="kb-topic">Automated Red Teaming Pipelines</span><span class="kb-topic">Multi-Turn Attack Chains</span><span class="kb-topic">System Prompt Extraction</span><span class="kb-topic">Context Window Manipulation</span><span class="kb-topic">Tool & Plugin Abuse in Agents</span><span class="kb-topic">Insecure Output Handling</span><span class="kb-topic">AI Supply Chain Attacks</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Tooling & Frameworks</div>
+            <div class="kb-topics"><span class="kb-topic">Garak — LLM Vulnerability Scanner</span><span class="kb-topic">PyRIT — Python Risk Identification Toolkit</span><span class="kb-topic">PromptBench</span><span class="kb-topic">AI Red Team Playbooks</span><span class="kb-topic">Azure AI Red Team Framework</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kb-card reveal d2">
+        <div class="kb-card-header" onclick="toggleKb(this)">
+          <span class="kb-card-icon">🔵</span>
+          <span class="kb-card-title">21. AI Blue Teaming — Currently Studying</span>
+          <span class="kb-card-count">18+ topics</span>
+          <span class="kb-chevron">▼</span>
+        </div>
+        <div class="kb-body">
+          <div class="kb-group">
+            <div class="kb-group-title">AI Defence Controls</div>
+            <div class="kb-topics"><span class="kb-topic">Input Validation & Sanitisation for LLMs</span><span class="kb-topic">Output Filtering & Content Moderation</span><span class="kb-topic">Guardrails — NeMo / Llama Guard</span><span class="kb-topic">Prompt Shield — Azure AI</span><span class="kb-topic">System Prompt Hardening</span><span class="kb-topic">Rate Limiting AI APIs</span><span class="kb-topic">LLM Firewalls</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">AI Monitoring & Detection</div>
+            <div class="kb-topics"><span class="kb-topic">LLM Observability — Logging & Tracing</span><span class="kb-topic">Detecting Prompt Injection Attempts</span><span class="kb-topic">Anomaly Detection in AI Outputs</span><span class="kb-topic">AI SIEM Integration</span><span class="kb-topic">Monitoring AI Agent Behaviour</span><span class="kb-topic">Abuse Pattern Detection</span><span class="kb-topic">Model Drift & Degradation Monitoring</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Governance & Responsible AI</div>
+            <div class="kb-topics"><span class="kb-topic">AI Risk Management Framework — NIST AI RMF</span><span class="kb-topic">Responsible AI Principles</span><span class="kb-topic">Model Cards & Transparency</span><span class="kb-topic">Bias Detection & Fairness</span><span class="kb-topic">AI Incident Response Playbooks</span><span class="kb-topic">EU AI Act Compliance</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kb-card reveal d3">
+        <div class="kb-card-header" onclick="toggleKb(this)">
+          <span class="kb-card-icon">⎈</span>
+          <span class="kb-card-title">22. Kubernetes Security — Currently Studying</span>
+          <span class="kb-card-count">25+ topics</span>
+          <span class="kb-chevron">▼</span>
+        </div>
+        <div class="kb-body">
+          <div class="kb-group">
+            <div class="kb-group-title">Cluster Hardening</div>
+            <div class="kb-topics"><span class="kb-topic">CIS Kubernetes Benchmarks</span><span class="kb-topic">API Server Security — Auth / Audit Logs</span><span class="kb-topic">etcd Encryption at Rest</span><span class="kb-topic">Node Security — OS Hardening / Seccomp</span><span class="kb-topic">RBAC — Roles / ClusterRoles / Bindings</span><span class="kb-topic">Service Account Least Privilege</span><span class="kb-topic">Admission Controllers — OPA / Gatekeeper</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Workload Security</div>
+            <div class="kb-topics"><span class="kb-topic">Pod Security Standards (PSS)</span><span class="kb-topic">Pod Security Admission (PSA)</span><span class="kb-topic">Secrets Management — Vault / External Secrets</span><span class="kb-topic">Container Image Scanning — Trivy / Snyk</span><span class="kb-topic">Supply Chain Security — SLSA / Sigstore / Cosign</span><span class="kb-topic">Network Policies — Calico / Cilium</span><span class="kb-topic">Runtime Security — Falco</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Cloud K8s Platforms</div>
+            <div class="kb-topics"><span class="kb-topic">EKS Security — IAM Roles for Service Accounts</span><span class="kb-topic">AKS Security — Azure Policy / Defender for Containers</span><span class="kb-topic">GKE Security — Workload Identity / Binary Auth</span><span class="kb-topic">Service Mesh Security — Istio mTLS</span><span class="kb-topic">Kubernetes Secrets Encryption</span><span class="kb-topic">Multi-Tenancy Security</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kb-card reveal d4">
+        <div class="kb-card-header" onclick="toggleKb(this)">
+          <span class="kb-card-icon">⚛️</span>
+          <span class="kb-card-title">23. Quantum Computing Security — Currently Studying</span>
+          <span class="kb-card-count">15+ topics</span>
+          <span class="kb-chevron">▼</span>
+        </div>
+        <div class="kb-body">
+          <div class="kb-group">
+            <div class="kb-group-title">Quantum Fundamentals</div>
+            <div class="kb-topics"><span class="kb-topic">Qubits & Superposition</span><span class="kb-topic">Quantum Entanglement</span><span class="kb-topic">Quantum Gates & Circuits</span><span class="kb-topic">Quantum Algorithms — Shor's & Grover's</span><span class="kb-topic">Quantum Key Distribution (QKD)</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Post-Quantum Cryptography</div>
+            <div class="kb-topics"><span class="kb-topic">Threat of Quantum to RSA & ECC</span><span class="kb-topic">NIST Post-Quantum Standards — CRYSTALS-Kyber / CRYSTALS-Dilithium</span><span class="kb-topic">Lattice-Based Cryptography</span><span class="kb-topic">Hash-Based Signatures</span><span class="kb-topic">Crypto-Agility — Preparing for Migration</span><span class="kb-topic">Harvest Now Decrypt Later (HNDL) Attacks</span><span class="kb-topic">Timeline of Quantum Threat</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kb-card reveal d5">
+        <div class="kb-card-header" onclick="toggleKb(this)">
+          <span class="kb-card-icon">🔑</span>
+          <span class="kb-card-title">24. Authentication, IAM & Identity Protocols</span>
+          <span class="kb-card-count">30+ topics</span>
+          <span class="kb-chevron">▼</span>
+        </div>
+        <div class="kb-body">
+          <div class="kb-group">
+            <div class="kb-group-title">Authentication Fundamentals</div>
+            <div class="kb-topics"><span class="kb-topic">Authentication vs Authorisation vs Accounting (AAA)</span><span class="kb-topic">Factors — Something You Know / Have / Are</span><span class="kb-topic">Password Hashing — bcrypt / Argon2 / PBKDF2</span><span class="kb-topic">Credential Stuffing & Brute Force Defence</span><span class="kb-topic">MFA — TOTP / FIDO2 / Hardware Keys</span><span class="kb-topic">Passwordless Authentication</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Identity Protocols</div>
+            <div class="kb-topics"><span class="kb-topic">OAuth 2.0 — Authorization Code / Client Credentials / Device Flow</span><span class="kb-topic">OpenID Connect (OIDC) — ID Tokens / UserInfo / Discovery</span><span class="kb-topic">SAML 2.0 — Assertions / Bindings / Profiles</span><span class="kb-topic">SCIM — User Provisioning</span><span class="kb-topic">JWT — Structure / Signing / Validation / Common Attacks</span><span class="kb-topic">PKCE — Proof Key for Code Exchange</span><span class="kb-topic">Token Rotation & Refresh Token Security</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">SSO & Federation</div>
+            <div class="kb-topics"><span class="kb-topic">Single Sign-On (SSO) Architecture</span><span class="kb-topic">Enterprise SSO — Azure AD / Okta / Ping</span><span class="kb-topic">LDAP & Active Directory Federation</span><span class="kb-topic">WS-Federation</span><span class="kb-topic">Cross-Domain SSO</span><span class="kb-topic">SSO Security Risks — Token Theft / Session Fixation</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Advanced IAM</div>
+            <div class="kb-topics"><span class="kb-topic">Zero Trust Identity — Continuous Verification</span><span class="kb-topic">PAM — Privileged Access Management</span><span class="kb-topic">CyberArk / BeyondTrust</span><span class="kb-topic">Just-In-Time (JIT) Access</span><span class="kb-topic">Attribute-Based Access Control (ABAC)</span><span class="kb-topic">Policy-Based Access Control (PBAC)</span><span class="kb-topic">Identity Governance & Administration (IGA)</span><span class="kb-topic">Decentralised Identity — W3C DIDs / Verifiable Credentials</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kb-card reveal d6">
+        <div class="kb-card-header" onclick="toggleKb(this)">
+          <span class="kb-card-icon">⚙️</span>
+          <span class="kb-card-title">25. DevSecOps — Shift Left Security</span>
+          <span class="kb-card-count">35+ topics</span>
+          <span class="kb-chevron">▼</span>
+        </div>
+        <div class="kb-body">
+          <div class="kb-group">
+            <div class="kb-group-title">DevSecOps Fundamentals</div>
+            <div class="kb-topics"><span class="kb-topic">DevSecOps Principles & Culture</span><span class="kb-topic">Shifting Security Left</span><span class="kb-topic">Threat Modelling in SDLC — STRIDE / PASTA / DREAD</span><span class="kb-topic">Security Champions Programme</span><span class="kb-topic">DevSecOps Maturity Model (DSOMM)</span><span class="kb-topic">OWASP SAMM — Software Assurance Maturity Model</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">CI/CD Pipeline Security</div>
+            <div class="kb-topics"><span class="kb-topic">Pipeline Hardening — Least Privilege / Branch Protection</span><span class="kb-topic">Secrets Detection — GitLeaks / TruffleHog / GitHub Secret Scanning</span><span class="kb-topic">SAST — Static Application Security Testing — SonarQube / Semgrep</span><span class="kb-topic">DAST — Dynamic Application Security Testing — OWASP ZAP / Burp CI</span><span class="kb-topic">SCA — Software Composition Analysis — Snyk / OWASP Dependency Check</span><span class="kb-topic">Container Image Scanning — Trivy / Grype / Anchore</span><span class="kb-topic">IaC Security Scanning — Checkov / Terrascan / tfsec</span><span class="kb-topic">License Compliance Scanning</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Supply Chain Security</div>
+            <div class="kb-topics"><span class="kb-topic">Software Supply Chain Attacks — SolarWinds / XZ Utils</span><span class="kb-topic">SLSA Framework — Supply Chain Levels for Software Artefacts</span><span class="kb-topic">SBOM — Software Bill of Materials</span><span class="kb-topic">Sigstore — Cosign / Fulcio / Rekor</span><span class="kb-topic">Dependency Pinning & Verification</span><span class="kb-topic">Artefact Signing & Verification</span><span class="kb-topic">Private Registry Security</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Infrastructure & Platform</div>
+            <div class="kb-topics"><span class="kb-topic">GitOps Security — ArgoCD / Flux</span><span class="kb-topic">Policy-as-Code — OPA / Conftest</span><span class="kb-topic">Infrastructure as Code Security — Terraform / CloudFormation</span><span class="kb-topic">Secrets Management — HashiCorp Vault / AWS Secrets Manager</span><span class="kb-topic">Environment Isolation — Dev / Staging / Prod</span><span class="kb-topic">Runtime Security — Falco / eBPF</span><span class="kb-topic">Service Mesh — Istio / Linkerd mTLS</span>
+            </div>
+          </div>
+          <div class="kb-group">
+            <div class="kb-group-title">Toolchain</div>
+            <div class="kb-topics"><span class="kb-topic">GitHub Advanced Security</span><span class="kb-topic">Azure DevOps Security</span><span class="kb-topic">GitLab Security Scanning</span><span class="kb-topic">Jenkins Security</span><span class="kb-topic">Kubernetes RBAC in CI/CD</span><span class="kb-topic">Security Gates & Quality Gates</span><span class="kb-topic">Compliance as Code</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ RESOURCES ════ -->
+<section id="resources">
+  <div class="sec-wrap">
+    <div class="sec-label reveal">
+      <span class="sec-num">09</span>
+      <h2 class="sec-title">Resources</h2>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="res-grid">
+      <a href="#" class="res-card reveal d1"><span class="res-icon">📋</span><div class="res-type">Checklist</div><div class="res-name">Multi-Cloud Security Architecture Checklist</div><div class="res-desc">Practical checklist for securing AWS, Azure, and GCP environments from day one.</div></a>
+      <a href="#" class="res-card reveal d2"><span class="res-icon">🌐</span><div class="res-type">Guide</div><div class="res-name">Network Security Hardening Guide</div><div class="res-desc">Step-by-step hardening for Cisco, Palo Alto, and Fortinet deployments — routing, VLANs, firewall rules, and VPN.</div></a>
+      <a href="#" class="res-card reveal d3"><span class="res-icon">🤖</span><div class="res-type">Framework</div><div class="res-name">AI & LLM Security Threat Model</div><div class="res-desc">Threat modelling framework for AI systems — covering prompt injection, agent compromise, RAG poisoning, and supply chain risks.</div></a>
+      <a href="#" class="res-card reveal d4"><span class="res-icon">🔍</span><div class="res-type">Playbook</div><div class="res-name">Web App Pentest Methodology</div><div class="res-desc">My personal pentest methodology for web applications — OWASP Top 10 mapped, with tooling and payload references.</div></a>
+      <a href="#" class="res-card reveal d5"><span class="res-icon">🗺️</span><div class="res-type">Workbook</div><div class="res-name">MITRE ATT&CK Detection Mapping</div><div class="res-desc">Ready-to-use workbook mapping detections to ATT&CK techniques across network, cloud, and endpoint.</div></a>
+      <a href="#" class="res-card reveal d6"><span class="res-icon">🎓</span><div class="res-type">Study Notes</div><div class="res-name">AWS Security Specialty Exam Notes</div><div class="res-desc">Condensed study notes and tips for the AWS Certified Security – Specialty exam.</div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ════ BLOG ════ -->
+<section id="blog">
+  <div class="sec-wrap">
+    <div class="sec-label reveal">
+      <span class="sec-num">10</span>
+      <h2 class="sec-title">Blog</h2>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="blog-grid">
+
+      <a href="#" class="blog-card reveal d1">
+        <div class="blog-card-img"><div class="blog-card-img-placeholder">01</div><span class="blog-card-category">AI Security</span></div>
+        <div class="blog-card-body">
+          <div class="blog-card-meta"><span class="blog-card-date">Apr 2025</span><span class="blog-card-read">8 min read</span></div>
+          <div class="blog-card-title">Securing AI Agents: Prompt Injection, Tool Abuse & the New Attack Surface</div>
+          <p class="blog-card-excerpt">As autonomous AI agents proliferate across enterprise environments, attackers are learning to exploit them. Here's what the threat looks like and how to defend against it.</p>
+          <span class="blog-card-link">Read article</span>
+        </div>
+      </a>
+
+      <a href="#" class="blog-card reveal d2">
+        <div class="blog-card-img"><div class="blog-card-img-placeholder">02</div><span class="blog-card-category">Network Security</span></div>
+        <div class="blog-card-body">
+          <div class="blog-card-meta"><span class="blog-card-date">Mar 2025</span><span class="blog-card-read">7 min read</span></div>
+          <div class="blog-card-title">Zero Trust Network Segmentation with Palo Alto NGFWs</div>
+          <p class="blog-card-excerpt">A practical walkthrough of implementing micro-segmentation using Palo Alto security policies, App-ID, and User-ID to enforce least-privilege at the network layer.</p>
+          <span class="blog-card-link">Read article</span>
+        </div>
+      </a>
+
+      <a href="#" class="blog-card reveal d3">
+        <div class="blog-card-img"><div class="blog-card-img-placeholder">03</div><span class="blog-card-category">Web App Pentesting</span></div>
+        <div class="blog-card-body">
+          <div class="blog-card-meta"><span class="blog-card-date">Feb 2025</span><span class="blog-card-read">6 min read</span></div>
+          <div class="blog-card-title">IDOR Vulnerabilities in 2025: Still Everywhere, Still Devastating</div>
+          <p class="blog-card-excerpt">Insecure Direct Object Reference remains one of the most commonly missed and highest-impact vulnerabilities I find on engagements. Here's how to find them — and fix them.</p>
+          <span class="blog-card-link">Read article</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════ CONTACT ════ -->
+<section id="contact">
+  <div class="sec-wrap">
+    <div class="contact-grid">
+      <div>
+        <div class="sec-label reveal">
+          <span class="sec-num">08</span>
+          <h2 class="sec-title">Contact Me</h2>
+        </div>
+        <p class="contact-desc reveal">Open to cloud security roles, network security positions, AI security consultancy, and penetration testing engagements. Let's talk.</p>
+        <div class="contact-items">
+          <a href="/cdn-cgi/l/email-protection#4d0c2f293821202e342f283f3e282e0d2a202c2421632e2220" class="contact-item reveal d1">
+            <div class="ci-icon">✉</div>
+            <div><span class="ci-label">Email</span><span class="ci-val"><span class="__cf_email__" data-cfemail="15547771607978766c777067667076557278747c793b767a78">[email&#160;protected]</span></span></div>
+          </a>
+          <a href="tel:+447308667966" class="contact-item reveal d2">
+            <div class="ci-icon">📞</div>
+            <div><span class="ci-label">Phone</span><span class="ci-val">+44 7308 667966</span></div>
+          </a>
+          <a href="https://linkedin.com/in/abdul-m-116215171" target="_blank" class="contact-item reveal d3">
+            <div class="ci-icon">🔗</div>
+            <div><span class="ci-label">LinkedIn</span><span class="ci-val">linkedin.com/in/abdul-m-116215171</span></div>
+          </a>
+          <a href="Abdul_Mujeeb_CV.pdf" download class="contact-item reveal d4">
+            <div class="ci-icon">⬇</div>
+            <div><span class="ci-label">CV</span><span class="ci-val">Download my CV (PDF)</span></div>
+          </a>
+        </div>
+      </div>
+      <div class="contact-right reveal-right">
+        <div class="contact-right-title">What I Bring</div>
+        <p>A rare combination of deep network engineering knowledge, cloud security expertise, AI threat awareness, and practical offensive security experience — all in one hire.</p>
+        <div class="ks-list">
+          <div class="ks-item"><div class="ks-dot"></div>Multi-cloud security architecture from first principles</div>
+          <div class="ks-item"><div class="ks-dot"></div>Enterprise network design — routing, switching, firewall, VPN</div>
+          <div class="ks-item"><div class="ks-dot"></div>AI & LLM security — threat modelling and red teaming</div>
+          <div class="ks-item"><div class="ks-dot"></div>Web application and network penetration testing</div>
+          <div class="ks-item"><div class="ks-dot"></div>DevSecOps — security built into pipelines, not bolted on</div>
+          <div class="ks-item"><div class="ks-dot"></div>SOC leadership and incident response at enterprise scale</div>
+          <div class="ks-item"><div class="ks-dot"></div>ISO 27001, Cyber Essentials+, GDPR compliance delivery</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-name">Abdul Mujeeb</div>
+  <div class="footer-copy">© 2025 · Cloud, Network & AI Security Engineer · London, UK</div>
+</footer>
+
+<script>
+  // KNOWLEDGE BASE ACCORDION
+  function toggleKb(header) {
+    var body = header.nextElementSibling;
+    var isOpen = header.classList.contains('open');
+    header.classList.toggle('open', !isOpen);
+    body.classList.toggle('open', !isOpen);
+  }
+
+  // HAMBURGER
+  const hamburger = document.getElementById('hamburger');
+  const drawer    = document.getElementById('navDrawer');
+  const overlay   = document.getElementById('navOverlay');
+  const openMenu  = () => { hamburger.classList.add('open'); drawer.classList.add('open'); overlay.classList.add('open'); document.body.style.overflow='hidden'; };
+  const closeMenu = () => { hamburger.classList.remove('open'); drawer.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow=''; };
+  hamburger.addEventListener('click', () => drawer.classList.contains('open') ? closeMenu() : openMenu());
+  overlay.addEventListener('click', closeMenu);
+  document.querySelectorAll('.dl').forEach(l => l.addEventListener('click', closeMenu));
+
+  // SCROLL REVEAL
+  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+
+  const obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  revealEls.forEach(function(el) { obs.observe(el); });
+</script>
+</body>
+</html>
